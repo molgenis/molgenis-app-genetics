@@ -1,12 +1,10 @@
-package org.molgenis.genetics.diag.genenetwork;
+package molgenis.ui.genenetwork;
 
+import molgenis.ui.genenetwork.meta.GeneNetworkScoreFactory;
+import molgenis.ui.genenetwork.meta.GeneNetworkScoreMetaData;
 import org.molgenis.data.AbstractMolgenisSpringTest;
-import org.molgenis.data.DataService;
 import org.molgenis.data.Entity;
 import org.molgenis.framework.ui.MolgenisPluginRegistry;
-import org.molgenis.genetics.diag.genenetwork.meta.GeneNetworkScoreFactory;
-import org.molgenis.genetics.diag.genenetwork.meta.GeneNetworkScoreMetaData;
-import org.molgenis.util.ResourceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,9 +26,6 @@ public class GeneNetworkControllerTest extends AbstractMolgenisSpringTest
 	@Autowired
 	private GeneNetworkController geneNetworkController;
 
-	@Autowired
-	DataService dataService;
-
 	List<String> hpo = Arrays.asList("hpo1", "hpo2", "hpo3");
 	Map<String, String> genes = new HashMap<>();
 
@@ -46,7 +41,7 @@ public class GeneNetworkControllerTest extends AbstractMolgenisSpringTest
 	public void testCreateHpoTermList() throws IOException
 	{
 		List result = geneNetworkController
-				.createHpoTermList(new Scanner(ResourceUtils.getFile(getClass(), "/testfile.txt")));
+				.createHpoTermList(new Scanner(org.molgenis.util.ResourceUtils.getFile(getClass(), "/testfile.txt")));
 		for (String value : hpo)
 		{
 			assertTrue(result.contains(value));
@@ -56,8 +51,8 @@ public class GeneNetworkControllerTest extends AbstractMolgenisSpringTest
 	@Test
 	public void testCreateEnsembleHugoMap() throws IOException
 	{
-		Map<String, String> result = geneNetworkController
-				.createEnsembleHugoMap(ResourceUtils.getFile(getClass(), "/mart_export.txt").getPath());
+		Map<String, String> result = geneNetworkController.createEnsembleHugoMap(
+				org.molgenis.util.ResourceUtils.getFile(getClass(), "/mart_export.txt").getPath());
 		assertEquals(result.keySet().size(), 3);
 		for (String key : genes.keySet())
 		{
@@ -92,12 +87,6 @@ public class GeneNetworkControllerTest extends AbstractMolgenisSpringTest
 	@Import({ GeneNetworkScoreMetaData.class, GeneNetworkScoreFactory.class })
 	public static class Config
 	{
-		@Bean
-		DataService dataService()
-		{
-			return mock(DataService.class);
-		}
-
 		@Bean
 		MolgenisPluginRegistry pluginRegistry()
 		{

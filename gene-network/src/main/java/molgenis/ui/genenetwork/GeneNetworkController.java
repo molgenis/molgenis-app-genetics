@@ -1,9 +1,9 @@
-package org.molgenis.genetics.diag.genenetwork;
+package molgenis.ui.genenetwork;
 
 import org.molgenis.data.DataService;
 import org.molgenis.data.Entity;
-import org.molgenis.genetics.diag.genenetwork.meta.GeneNetworkScoreFactory;
-import org.molgenis.genetics.diag.genenetwork.meta.GeneNetworkScoreMetaData;
+import molgenis.ui.genenetwork.meta.GeneNetworkScoreFactory;
+import molgenis.ui.genenetwork.meta.GeneNetworkScoreMetaData;
 import org.molgenis.ui.MolgenisPluginController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ import java.util.*;
 
 import static org.molgenis.data.meta.model.Package.PACKAGE_SEPARATOR;
 import static org.molgenis.data.system.model.RootSystemPackage.PACKAGE_SYSTEM;
-import static org.molgenis.genetics.diag.genenetwork.GeneNetworkController.URI;
+import static molgenis.ui.genenetwork.GeneNetworkController.URI;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller

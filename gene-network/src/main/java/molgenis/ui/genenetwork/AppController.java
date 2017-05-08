@@ -1,4 +1,4 @@
-package org.molgenis.genetics.diag.genenetwork;
+package molgenis.ui.genenetwork;
 
 import org.molgenis.ui.MolgenisPluginController;
 import org.molgenis.ui.menu.MenuReaderService;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static org.molgenis.genetics.diag.genenetwork.AppController.URI;
+import static molgenis.ui.genenetwork.AppController.URI;
 import static org.molgenis.security.core.utils.SecurityUtils.getCurrentUsername;
 
 @Controller
