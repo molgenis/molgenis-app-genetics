@@ -1,0 +1,13 @@
+target/
+.settings/
+.project
+.classpath
+.idea
+*.iml
+*.DS_Store
+
+**/npm-debug.log
+
+**/.factorypath
+**/node_modules
+**/node
