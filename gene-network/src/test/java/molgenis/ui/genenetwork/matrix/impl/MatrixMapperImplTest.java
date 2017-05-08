@@ -1,4 +1,4 @@
-package molgenis.ui.matrix.impl;
+package molgenis.ui.genenetwork.matrix.impl;
 
 import org.molgenis.data.MolgenisDataException;
 import org.molgenis.util.ResourceUtils;

@@ -1,4 +1,4 @@
-package molgenis.ui.matrix.impl;
+package molgenis.ui.genenetwork.matrix.impl;
 
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.molgenis.data.MolgenisDataException;

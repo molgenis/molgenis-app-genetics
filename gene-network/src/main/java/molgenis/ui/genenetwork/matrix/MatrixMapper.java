@@ -1,4 +1,4 @@
-package molgenis.ui.matrix;
+package molgenis.ui.genenetwork.matrix;
 
 public interface MatrixMapper
 {

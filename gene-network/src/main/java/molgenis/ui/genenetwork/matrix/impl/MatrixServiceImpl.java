@@ -1,9 +1,9 @@
-package molgenis.ui.matrix.impl;
+package molgenis.ui.genenetwork.matrix.impl;
 
-import molgenis.ui.matrix.MatrixMapper;
-import molgenis.ui.matrix.MatrixService;
-import molgenis.ui.matrix.meta.MatrixMetadata;
-import molgenis.ui.matrix.model.Score;
+import molgenis.ui.genenetwork.matrix.MatrixMapper;
+import molgenis.ui.genenetwork.matrix.MatrixService;
+import molgenis.ui.genenetwork.matrix.meta.MatrixMetadata;
+import molgenis.ui.genenetwork.matrix.model.Score;
 import org.molgenis.data.DataService;
 import org.molgenis.data.Entity;
 import org.molgenis.data.MolgenisDataException;

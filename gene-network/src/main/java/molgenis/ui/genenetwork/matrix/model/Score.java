@@ -1,4 +1,4 @@
-package molgenis.ui.matrix.model;
+package molgenis.ui.genenetwork.matrix.model;
 
 import com.google.auto.value.AutoValue;
 import org.molgenis.gson.AutoGson;

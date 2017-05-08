@@ -1,4 +1,4 @@
-package molgenis.ui.matrix.meta;
+package molgenis.ui.genenetwork.matrix.meta;
 
 import org.molgenis.data.meta.AttributeType;
 import org.molgenis.data.meta.SystemEntityType;
