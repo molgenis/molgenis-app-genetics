@@ -1,4 +1,4 @@
-package org.molgenis.genetics.diag.genenetwork.meta;
+package molgenis.ui.genenetwork.meta;
 
 import org.molgenis.data.Entity;
 import org.molgenis.data.meta.model.EntityType;
