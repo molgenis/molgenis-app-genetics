@@ -1,6 +1,6 @@
-package molgenis.ui.matrix.impl;
+package molgenis.ui.genenetwork.matrix.impl;
 
-import molgenis.ui.matrix.MatrixMapper;
+import molgenis.ui.genenetwork.matrix.MatrixMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.molgenis.data.MolgenisDataException;
 

@@ -1,6 +1,6 @@
-package molgenis.ui.matrix;
+package molgenis.ui.genenetwork.matrix;
 
-import molgenis.ui.matrix.model.Score;
+import molgenis.ui.genenetwork.matrix.model.Score;
 
 import java.util.List;
 
