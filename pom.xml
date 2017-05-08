@@ -380,6 +380,7 @@
 
     <modules>
         <module>web-app</module>
+		<module>gene-network</module>
     </modules>
 
 </project>
