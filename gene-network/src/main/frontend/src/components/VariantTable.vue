@@ -7,20 +7,24 @@
   export default {
     name: 'variant-table',
     props: ['variants'],
+    // TODO Add columns
+    // Gavin reason
+    // TODO Relevant variants and all variants
+    // TODO sort on score
     data: function () {
       return {
         fields: {
           '#CHROM': {
-            label: 'Chromosome'
+            label: 'Chrom'
           },
           'POS': {
             label: 'Position'
           },
           'REF': {
-            label: 'Reference allele'
+            label: 'REF'
           },
           'ALT': {
-            label: 'Alternative allele'
+            label: 'ALT'
           },
           'Gene_Name': {
             label: 'Gene'
