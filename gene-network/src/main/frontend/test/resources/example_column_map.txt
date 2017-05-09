@@ -1,0 +1,3 @@
+matrix  mapping
+Crohn's disease  col1
+Intellectual disability  col2

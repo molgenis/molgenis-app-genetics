@@ -1,0 +1,4 @@
+  "Crohn's disease" "Intellectual disability"
+BRCA1	1.123	1.234
+BRCA2	2.123	2.234
+BRCA3	3.123	3.234
