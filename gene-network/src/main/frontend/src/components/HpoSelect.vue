@@ -54,7 +54,7 @@
 <script>
   import vSelect from 'vue-select'
   import { get } from '../MolgenisApi'
-  import { SET_PHENOTYPE_FILTERS, TOGGLE_ACTIVE_PHENOTYPE_FILTERS } from '../store/mutations'
+  import { SET_PHENOTYPE_FILTERS, TOGGLE_ACTIVE_PHENOTYPE_FILTERS, CREATE_ALERT } from '../store/mutations'
   import { COMPUTE_SCORE } from '../store/actions'
 
   export default {
@@ -84,7 +84,6 @@
           })
       },
       selectionChanged (selectedPhenotypeFilter) {
-        console.log(selectedPhenotypeFilter)
         this.$store.commit(SET_PHENOTYPE_FILTERS, selectedPhenotypeFilter)
         this.$store.dispatch(COMPUTE_SCORE, selectedPhenotypeFilter)
       },
@@ -95,6 +94,16 @@
     },
     components: {
       vSelect
+    },
+    created: function () {
+      get(this.$store.state.session.server, '/v2/sys_ont_OntologyTerm?q=ontology.ontologyName==hp').then(response => {
+        if (response.total === 0) {
+          this.$store.commit(CREATE_ALERT, {
+            'message': 'The HPO ontology has not been uploaded yet. Download the OWL file here: http://human-phenotype-ontology.github.io/downloads.html',
+            'type': 'warning'
+          })
+        }
+      })
     }
   }
 </script>

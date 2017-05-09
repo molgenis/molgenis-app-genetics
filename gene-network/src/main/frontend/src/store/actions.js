@@ -117,14 +117,16 @@ const actions = {
     }).toString()
 
     const phenotypeFilter = allPhenotypeFilters[0]
-
     get(state.session.server, '/matrix/' + matrixEntityId + '/valueByNames?rows=' +
       rows + '&columns=' + phenotypeFilter.ontologyTermName, state.token)
       .then(response => {
       // commit(SET_PATIENT, response.items)
-        console.log(response)
       }).catch((error) => {
-        commit(CREATE_ALERT, {'message': error.errors[0].message, 'type': 'warning'})
+        if (error.errors === undefined) {
+          commit(CREATE_ALERT, {'message': 'Error, something went really wrong: ' + error, 'type': 'danger'})
+        } else {
+          commit(CREATE_ALERT, {'message': error.errors[0].message, 'type': 'warning'})
+        }
       })
     // const ontologyTermIRI = phenotype.ontologyTermIRI
     // const primaryID = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1)

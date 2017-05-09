@@ -7,7 +7,7 @@
     <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>
-<div id="root" style="height: 100%"></div>
+<div id="app"></div>
 <script type="text/javascript">
 ___INITIAL_STATE__ = {
     'diagnosticsPackageId':  'aaaacw6j3lvrxfrbucrmpnqaae',
