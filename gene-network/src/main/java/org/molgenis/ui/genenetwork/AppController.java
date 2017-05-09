@@ -28,7 +28,6 @@ public class AppController extends MolgenisPluginController
 	public AppController(MenuReaderService menuReaderService)
 	{
 		super(URI);
-		System.out.println("$$$$$$$$$$$$$$$ ADDING PLUGIN APP GNEETIC ####");
 		this.menuReaderService = menuReaderService;
 	}
 
