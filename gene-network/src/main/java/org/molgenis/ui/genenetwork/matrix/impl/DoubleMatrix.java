@@ -12,7 +12,7 @@ import static org.ujmp.core.Matrix.Factory;
 class DoubleMatrix
 {
 	private final File file;
-	private final char seperator;
+	private final char separator;
 
 	private TObjectIntHashMap columnMap = new TObjectIntHashMap();
 	private TObjectIntHashMap rowMap = new TObjectIntHashMap();
@@ -20,17 +20,17 @@ class DoubleMatrix
 
 	private boolean inited = false;
 
-	public DoubleMatrix(File file, char seperator)
+	public DoubleMatrix(File file, char separator)
 	{
 		this.file = file;
-		this.seperator = seperator;
+		this.separator = separator;
 	}
 
 	private void init()
 	{
 		try
 		{
-			matrix = Factory.linkTo().file(file.getAbsolutePath()).asDenseCSV(seperator);
+			matrix = Factory.linkTo().file(file.getAbsolutePath()).asDenseCSV(separator);
 			setRowIndicesMap();
 			setColumnIndicesMap();
 		}

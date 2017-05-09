@@ -1,26 +1,28 @@
 <template>
-  <b-table hover :items="variants" :fields="fields">
-  </b-table>
+  <b-table hover :items="variants" :fields="fields"></b-table>
 </template>
 
 <script>
   export default {
     name: 'variant-table',
     props: ['variants'],
+    // TODO Add columns: Gavin reason
+    // TODO Relevant variants and all variants
+    // TODO sort on score
     data: function () {
       return {
         fields: {
           '#CHROM': {
-            label: 'Chromosome'
+            label: 'Chrom'
           },
           'POS': {
             label: 'Position'
           },
           'REF': {
-            label: 'Reference allele'
+            label: 'REF'
           },
           'ALT': {
-            label: 'Alternative allele'
+            label: 'ALT'
           },
           'Gene_Name': {
             label: 'Gene'

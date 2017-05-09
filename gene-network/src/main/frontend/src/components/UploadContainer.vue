@@ -63,7 +63,7 @@
         const formData = new FormData()
         formData.append('file', this.file)
         formData.append('entityTypeId', this.entityTypeId)
-        formData.append('packageName', this.$store.state.diagnosticsPackageId)
+        formData.append('packageId', this.$store.state.diagnosticsPackageId)
         formData.append('action', 'ADD')
         formData.append('notify', false)
 

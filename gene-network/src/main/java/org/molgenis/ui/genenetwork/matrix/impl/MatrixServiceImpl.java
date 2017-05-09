@@ -118,7 +118,7 @@ public class MatrixServiceImpl implements MatrixService
 			{
 				MatrixMapper columnMapper = columnMappingMap.get(entityName);
 				if (columnMapper != null) column = columnMapper.map(column);
-				results.add(Score.createScore(row, column, matrix.getValueByName(row, column)));
+				results.add(Score.createScore(column, row, matrix.getValueByName(row, column)));
 			}
 		}
 		return results;

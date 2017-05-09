@@ -15,7 +15,7 @@
         <b-nav vertical>
           <b-nav-item>
             <router-link to="/">
-              <b-button class="btn">Import patient data</b-button>
+              <b-button class="btn btn">Import patient data</b-button>
             </router-link>
           </b-nav-item>
         </b-nav>
@@ -33,6 +33,16 @@
     </div>
   </div>
 </template>
+
+<style>
+  .card-header {
+    background-color: #b5d592!important;
+  }
+
+  .card-block {
+    text-align: center;
+  }
+</style>
 
 <script>
   import AlertContainer from './components/AlertContainer'
@@ -52,6 +62,7 @@
         }
       },
       patients: {
+        // TODO Add Delete button
         get: function () {
           return this.$store.state.patients
         }

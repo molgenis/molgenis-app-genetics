@@ -1,5 +1,5 @@
 import { get, login, submitForm } from '../MolgenisApi'
-import { CREATE_ALERT, SET_VARIANTS, SET_PATIENT_TABLES, SET_TOKEN, UPDATE_JOB, UPDATE_JOB_HREF } from './mutations'
+import { CREATE_ALERT, SET_VARIANTS, SET_PATIENT_TABLES, SET_TOKEN, UPDATE_JOB, UPDATE_JOB_HREF, SET_GENE_NETWORK_SCORES, UPDATE_VARIANT_SCORES } from './mutations'
 
 export const GET_PATIENT = '__GET_PATIENT__'
 export const IMPORT_FILE = '__IMPORT_FILE__'
@@ -8,7 +8,7 @@ export const FETCH_PATIENT_TABLES = '__FETCH_PATIENT_TABLES__'
 export const LOGIN = '__LOGIN__'
 export const COMPUTE_SCORE = '__COMPUTE_SCORE__'
 
-const actions = {
+export default {
   /**
    * Action to log in the current user
    *
@@ -110,27 +110,26 @@ const actions = {
    * @param state current state of the application
    * @param phenotype
    */
-  [COMPUTE_SCORE] ({commit, state}, allPhenotypeFilters) {
+  [COMPUTE_SCORE] ({commit, state}, phenotypeFilter) {
     const matrixEntityId = state.matrixEntityId
     const rows = state.variants.map(function (variant) {
       return variant.Gene_Name
     }).toString()
 
-    const phenotypeFilter = allPhenotypeFilters[0]
+    const ontologyTermIRI = phenotypeFilter.ontologyTermIRI
+    const phenotypeId = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace('_', ':')
+
     get(state.session.server, '/matrix/' + matrixEntityId + '/valueByNames?rows=' +
-      rows + '&columns=' + phenotypeFilter.ontologyTermName, state.token)
+      rows + '&columns=' + phenotypeId, state.token)
       .then(response => {
-      // commit(SET_PATIENT, response.items)
+        commit(SET_GENE_NETWORK_SCORES, response)
+        commit(UPDATE_VARIANT_SCORES)
       }).catch((error) => {
         if (error.errors === undefined) {
-          commit(CREATE_ALERT, {'message': 'Error, something went really wrong: ' + error, 'type': 'danger'})
+          commit(CREATE_ALERT, {'message': 'No scores were found for the selected phenotype', 'type': 'warning'})
         } else {
           commit(CREATE_ALERT, {'message': error.errors[0].message, 'type': 'warning'})
         }
       })
-    // const ontologyTermIRI = phenotype.ontologyTermIRI
-    // const primaryID = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1)
   }
 }
-
-export default actions

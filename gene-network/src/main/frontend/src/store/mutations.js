@@ -7,6 +7,9 @@ export const SET_PATIENT_TABLES = '__SET_PATIENT_TABLES__'
 export const SET_PHENOTYPE_FILTERS = '__SET_PHENOTYPE_FILTERS__'
 export const SET_VARIANTS = '__SET_PATIENT__'
 export const TOGGLE_ACTIVE_PHENOTYPE_FILTERS = '__TOGGLE_ACTIVE_PHENOTYPE_FILTERS__'
+export const SET_GENE_NETWORK_SCORES = '__SET_GENE_NETWORK_SCORES__'
+export const REMOVE_GENE_NETWORK_SCORES = '__REMOVE_GENE_NETWORK_SCORES__'
+export const UPDATE_VARIANT_SCORES = '__UPDATE_VARIANT_SCORES__'
 
 export default {
   /**
@@ -95,5 +98,47 @@ export default {
    */
   [SET_VARIANTS] (state, variants) {
     state.variants = variants
+  },
+  /**
+   * Update variant entity objects in the state with a GeneNetwork score
+   * Retrieves scores for all phenotypeFilters from state
+   *
+   * @param state state of the application
+   */
+  [UPDATE_VARIANT_SCORES] (state) {
+    state.variants = state.variants.map(function (variantEntity) {
+      // TODO Split variantEntity.EFFECT on pipe and add fields to entity.
+
+      let totalSum = 0
+      Object.keys(state.geneNetworkScores).map(function (phenotypeId) {
+        const scoreMap = state.geneNetworkScores[phenotypeId]
+        totalSum = totalSum + scoreMap[variantEntity.Gene_Name]
+      })
+      variantEntity.totalScore = totalSum
+      return variantEntity
+    })
+  },
+  /**
+   * Use reduce function to produce {Phenotype1: {gene1: score, gene2: score...}, Phenotype2: {...}}
+   *
+   * @param state state of the application
+   * @param scores list of scores returned by the server
+   */
+  [SET_GENE_NETWORK_SCORES] (state, scores) {
+    const phenotypeId = scores[0].column
+    state.geneNetworkScores[phenotypeId] = scores.reduce(function (acc, score) {
+      return {...acc, [score.row]: score.value}
+    }, {})
+  },
+  /**
+   * Remove geneNetwork scores for a specific phenotypeId. Updates scores in the Variant table
+   *
+   * @param state state of the application
+   * @param phenotypeId Id of the filter that was removed
+   */
+  [REMOVE_GENE_NETWORK_SCORES] (state, removedPhenotypeFilter) {
+    const ontologyTermIRI = removedPhenotypeFilter.ontologyTermIRI
+    const phenotypeId = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace('_', ':')
+    delete state.geneNetworkScores[phenotypeId]
   }
 }
