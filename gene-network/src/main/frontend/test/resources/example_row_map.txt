@@ -1,0 +1,4 @@
+matrix  mapping
+BRCA1   row1
+BRCA2   row2
+BRCA3   row3
