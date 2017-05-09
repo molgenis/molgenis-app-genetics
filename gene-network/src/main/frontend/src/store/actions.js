@@ -8,7 +8,7 @@ export const FETCH_PATIENT_TABLES = '__FETCH_PATIENT_TABLES__'
 export const LOGIN = '__LOGIN__'
 export const COMPUTE_SCORE = '__COMPUTE_SCORE__'
 
-const actions = {
+export default {
   /**
    * Action to log in the current user
    *
@@ -117,10 +117,10 @@ const actions = {
     }).toString()
 
     const ontologyTermIRI = phenotypeFilter.ontologyTermIRI
-    const primaryID = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace('_', ':')
+    const phenotypeId = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace('_', ':')
 
     get(state.session.server, '/matrix/' + matrixEntityId + '/valueByNames?rows=' +
-      rows + '&columns=' + primaryID, state.token)
+      rows + '&columns=' + phenotypeId, state.token)
       .then(response => {
         commit(SET_GENE_NETWORK_SCORES, response)
         commit(UPDATE_VARIANT_SCORES)
@@ -133,5 +133,3 @@ const actions = {
       })
   }
 }
-
-export default actions

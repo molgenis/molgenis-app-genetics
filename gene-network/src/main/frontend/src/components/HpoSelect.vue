@@ -42,7 +42,8 @@
     SET_PHENOTYPE_FILTERS,
     TOGGLE_ACTIVE_PHENOTYPE_FILTERS,
     CREATE_ALERT,
-    CLEAR_GENE_NETWORK_SCORES
+    REMOVE_GENE_NETWORK_SCORES,
+    UPDATE_VARIANT_SCORES
   } from '../store/mutations'
   import { COMPUTE_SCORE } from '../store/actions'
 
@@ -72,13 +73,21 @@
             })
           })
       },
-      selectionChanged (selectedPhenotypeFilter) {
-        this.$store.commit(SET_PHENOTYPE_FILTERS, selectedPhenotypeFilter)
-        const lastSelectedItem = selectedPhenotypeFilter.slice(-1).pop()
-        if (lastSelectedItem !== undefined) {
-          this.$store.dispatch(COMPUTE_SCORE, lastSelectedItem)
+      selectionChanged (selectedPhenotypeFilters) {
+        const filtersInState = this.$store.state.phenotypeFilters
+
+        const phenotypeFilter = filtersInState
+          .filter(x => selectedPhenotypeFilters.indexOf(x) === -1)
+          .concat(selectedPhenotypeFilters.filter(x => filtersInState.indexOf(x) === -1))[0]
+
+        this.$store.commit(SET_PHENOTYPE_FILTERS, selectedPhenotypeFilters)
+        if (selectedPhenotypeFilters.length > filtersInState.length) {
+          // Filter added
+          this.$store.dispatch(COMPUTE_SCORE, phenotypeFilter)
         } else {
-          this.$store.commit(CLEAR_GENE_NETWORK_SCORES)
+          // Filter removed
+          this.$store.commit(REMOVE_GENE_NETWORK_SCORES, phenotypeFilter)
+          this.$store.commit(UPDATE_VARIANT_SCORES)
         }
       },
       activationChanged (phenotypeId) {

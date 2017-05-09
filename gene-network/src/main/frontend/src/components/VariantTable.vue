@@ -1,14 +1,12 @@
 <template>
-  <b-table hover :items="variants" :fields="fields">
-  </b-table>
+  <b-table hover :items="variants" :fields="fields"></b-table>
 </template>
 
 <script>
   export default {
     name: 'variant-table',
     props: ['variants'],
-    // TODO Add columns
-    // Gavin reason
+    // TODO Add columns: Gavin reason
     // TODO Relevant variants and all variants
     // TODO sort on score
     data: function () {

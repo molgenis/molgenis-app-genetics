@@ -16,7 +16,9 @@
     computed: {
       variants: {
         get: function () {
-          return this.$store.state.variants
+          // Sort variants on GeneNetwork score before passing it to variant table
+          const variants = this.$store.state.variants.slice()
+          return variants.sort((a, b) => Number(b.totalScore) - Number(a.totalScore))
         }
       }
     },

@@ -8,7 +8,7 @@ export const SET_PHENOTYPE_FILTERS = '__SET_PHENOTYPE_FILTERS__'
 export const SET_VARIANTS = '__SET_PATIENT__'
 export const TOGGLE_ACTIVE_PHENOTYPE_FILTERS = '__TOGGLE_ACTIVE_PHENOTYPE_FILTERS__'
 export const SET_GENE_NETWORK_SCORES = '__SET_GENE_NETWORK_SCORES__'
-export const CLEAR_GENE_NETWORK_SCORES = '__CLEAR_GENE_NETWORK_SCORES__'
+export const REMOVE_GENE_NETWORK_SCORES = '__REMOVE_GENE_NETWORK_SCORES__'
 export const UPDATE_VARIANT_SCORES = '__UPDATE_VARIANT_SCORES__'
 
 export default {
@@ -121,8 +121,8 @@ export default {
   /**
    * Use reduce function to produce {Phenotype1: {gene1: score, gene2: score...}, Phenotype2: {...}}
    *
-   * @param state
-   * @param scores
+   * @param state state of the application
+   * @param scores list of scores returned by the server
    */
   [SET_GENE_NETWORK_SCORES] (state, scores) {
     const phenotypeId = scores[0].column
@@ -130,7 +130,15 @@ export default {
       return {...acc, [score.row]: score.value}
     }, {})
   },
-  [CLEAR_GENE_NETWORK_SCORES] (state) {
-    state.geneNetworkScores = {}
+  /**
+   * Remove geneNetwork scores for a specific phenotypeId. Updates scores in the Variant table
+   *
+   * @param state state of the application
+   * @param phenotypeId Id of the filter that was removed
+   */
+  [REMOVE_GENE_NETWORK_SCORES] (state, removedPhenotypeFilter) {
+    const ontologyTermIRI = removedPhenotypeFilter.ontologyTermIRI
+    const phenotypeId = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace('_', ':')
+    delete state.geneNetworkScores[phenotypeId]
   }
 }
