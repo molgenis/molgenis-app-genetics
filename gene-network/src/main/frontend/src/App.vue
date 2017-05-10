@@ -12,14 +12,18 @@
     <alert-container v-if="showAlert"></alert-container>
     <div class="row">
       <div class="col-md-3">
-        <b-nav vertical>
+        <b-nav tabs>
           <b-nav-item>
             <router-link to="/">
-              <b-button class="btn btn">Import patient data</b-button>
+              <a>Home</a>
+            </router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link to="upload">
+              <a>Import data</a>
             </router-link>
           </b-nav-item>
         </b-nav>
-        <hr>
         <b-nav vertical>
           <b-nav-item><span class="text-muted">Patients</span></b-nav-item>
           <b-nav-item v-for="patient in patients">
