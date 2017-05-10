@@ -99,6 +99,14 @@ export default {
   [SET_VARIANTS] (state, variants) {
     // TODO Split EFFECT field on pipe and add fields to entity.
     // TODO Add fields: Gavin reason, ???
+    variants.map(function (variantEntity) {
+      const split = variantEntity.EFFECT.split('|')
+      console.log(split)
+      variantEntity.cDNA = split[9]
+      variantEntity.pChange = split[10]
+      variantEntity.gavinReason = split[18]
+      return variantEntity
+    })
     state.variants = variants
   },
   /**
