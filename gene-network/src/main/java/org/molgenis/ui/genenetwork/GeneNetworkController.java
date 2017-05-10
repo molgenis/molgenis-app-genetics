@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import static java.util.Objects.requireNonNull;
 import static org.molgenis.security.core.utils.SecurityUtils.getCurrentUsername;
-import static org.molgenis.ui.genenetwork.AppController.URI;
+import static org.molgenis.ui.genenetwork.GeneNetworkController.URI;
 
 @Controller
 @RequestMapping(URI + "/**")
-public class AppController extends MolgenisPluginController
+public class GeneNetworkController extends MolgenisPluginController
 {
 	public static final String GN_APP = "gene-network";
 	public static final String URI = PLUGIN_URI_PREFIX + GN_APP;
@@ -33,7 +33,8 @@ public class AppController extends MolgenisPluginController
 	private static String DIAGNOSTICS_PACKAGE = "diagnostics";
 
 	@Autowired
-	public AppController(MenuReaderService menuReaderService, DataService dataService, PackageFactory packageFactory)
+	public GeneNetworkController(MenuReaderService menuReaderService, DataService dataService,
+			PackageFactory packageFactory)
 	{
 		super(URI);
 		this.menuReaderService = requireNonNull(menuReaderService);
@@ -57,7 +58,7 @@ public class AppController extends MolgenisPluginController
 
 	private String getBaseUrl()
 	{
-		return menuReaderService.getMenu().findMenuItemPath(AppController.GN_APP);
+		return menuReaderService.getMenu().findMenuItemPath(GeneNetworkController.GN_APP);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -71,7 +72,9 @@ public class AppController extends MolgenisPluginController
 		if (diagnosticsPackage == null)
 		{
 			diagnosticsPackage = packageFactory
-					.create("diagnostics", "Diagnostics package for storing patient VCF data");
+					.create(DIAGNOSTICS_PACKAGE, "Diagnostics package for storing patient VCF data");
+			diagnosticsPackage.setLabel(DIAGNOSTICS_PACKAGE);
+			dataService.getMeta().addPackage(diagnosticsPackage);
 		}
 		model.addAttribute("diagnosticsPackageId", diagnosticsPackage.getIdValue());
 		return "view-gn-app";
