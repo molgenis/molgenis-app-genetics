@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <b-card show-header class="mb-2">
           <h2 align="center" slot="header" class="text-muted">Diagnostics platform</h2>
-          Diagnostics platform created with MOLGENIS, used by UMCG Genetics department.
+          Diagnostics platform created with MOLGENIS
           <span v-if="entityTypeId != null">Currently viewing patient <strong>{{entityTypeId}}</strong></span>
         </b-card>
       </div>

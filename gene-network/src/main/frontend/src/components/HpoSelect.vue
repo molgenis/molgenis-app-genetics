@@ -19,7 +19,7 @@
 
     <div class="row form-group">
       <div class="col">
-        <label for="hpo-select">Select phenotypes to calculate variant relevance</label>
+        <label for="hpo-select">Select phenotypes retrieve gene network scores for every variant. <br>Variants are sorted based on <em>cumulative</em> gene network score.</label>
         <v-select
           id="hpo-select"
           :on-search="queryOntologies"
