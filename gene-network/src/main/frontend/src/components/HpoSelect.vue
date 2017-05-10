@@ -37,7 +37,7 @@
 
 <script>
   import vSelect from 'vue-select'
-  import { get } from '../MolgenisApi'
+  import { get } from '../molgenisApi'
   import {
     SET_PHENOTYPE_FILTERS,
     TOGGLE_ACTIVE_PHENOTYPE_FILTERS,
