@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import HomeContainer from 'components/HomeContainer'
 import UploadContainer from 'components/UploadContainer'
 import PhenotypeSelectionContainer from 'components/PhenotypeSelectionContainer'
 
@@ -11,6 +12,11 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
+      name: 'home',
+      component: HomeContainer
+    },
+    {
+      path: '/upload',
       name: 'upload',
       component: UploadContainer
     },
