@@ -69,13 +69,13 @@ export default {
     state.patients = patients
   },
   /**
-   * Sets the list of currently selected phenotypes
+   * Sets the list of currently selected phenotypes in the format
+   * {id:..., label:..., isActive:...}
    *
    * @param state state of the application
    * @param phenotypeFilters list of selected phenotypes, may be empty
    */
   [SET_PHENOTYPE_FILTERS] (state, phenotypeFilters) {
-    // Prevent Vuex error by using copy of phenotypeFilter array
     state.phenotypeFilters = phenotypeFilters.slice()
   },
   /**
@@ -108,11 +108,13 @@ export default {
   [UPDATE_VARIANT_SCORES] (state) {
     state.variants = state.variants.map(function (variantEntity) {
       // TODO Split variantEntity.EFFECT on pipe and add fields to entity.
-
       let totalSum = 0
-      Object.keys(state.geneNetworkScores).map(function (phenotypeId) {
-        const scoreMap = state.geneNetworkScores[phenotypeId]
-        totalSum = totalSum + scoreMap[variantEntity.Gene_Name]
+      state.phenotypeFilters.map(function (phenotypeFilter) {
+        if (phenotypeFilter.isActive) {
+          const phenotypeId = phenotypeFilter.id
+          const scoreMap = state.geneNetworkScores[phenotypeId]
+          totalSum = totalSum + scoreMap[variantEntity.Gene_Name]
+        }
       })
       variantEntity.totalScore = totalSum
       return variantEntity
@@ -137,8 +139,6 @@ export default {
    * @param phenotypeId Id of the filter that was removed
    */
   [REMOVE_GENE_NETWORK_SCORES] (state, removedPhenotypeFilter) {
-    const ontologyTermIRI = removedPhenotypeFilter.ontologyTermIRI
-    const phenotypeId = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace('_', ':')
-    delete state.geneNetworkScores[phenotypeId]
+    delete state.geneNetworkScores[removedPhenotypeFilter.id]
   }
 }

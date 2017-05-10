@@ -116,11 +116,8 @@ export default {
       return variant.Gene_Name
     }).toString()
 
-    const ontologyTermIRI = phenotypeFilter.ontologyTermIRI
-    const phenotypeId = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace('_', ':')
-
     get(state.session.server, '/matrix/' + matrixEntityId + '/valueByNames?rows=' +
-      rows + '&columns=' + phenotypeId, state.token)
+      rows + '&columns=' + phenotypeFilter.id, state.token)
       .then(response => {
         commit(SET_GENE_NETWORK_SCORES, response)
         commit(UPDATE_VARIANT_SCORES)

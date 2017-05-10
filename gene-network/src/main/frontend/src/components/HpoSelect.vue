@@ -6,7 +6,7 @@
         <ul id="selected-phenotype-list">
           <li v-for="filter in phenotypeFilters" class="row">
             <div class="col">
-              {{ filter.ontologyTermName }}
+              {{ filter.label }}
             </div>
             <b-form-checkbox :checked="filter.isActive" @change="activationChanged(filter.id)" class="col">
               active
@@ -27,7 +27,7 @@
           :onChange="selectionChanged"
           multiple
           placeholder="Search HPO Ontology..."
-          label="ontologyTermName"
+          label="label"
         >
         </v-select>
       </div>
@@ -68,31 +68,30 @@
         get(this.$store.state.session.server, '/v2/sys_ont_OntologyTerm?q=ontology.ontologyName==hp;(ontologyTermName=q=' + query + ',ontologyTermSynonym.ontologyTermSynonym=q=' + query + ',ontologyTermIRI=q=' + query + ')')
           .then(response => {
             this.phenotypes = response.items.map(function (phenotype) {
-              phenotype.isActive = true
-              return phenotype
+              const ontologyTermIRI = phenotype.ontologyTermIRI
+              const phenotypeId = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace('_', ':')
+              return {'id': phenotypeId, 'label': phenotype.ontologyTermName, 'isActive': true}
             })
           })
       },
       selectionChanged (selectedPhenotypeFilters) {
-        const filtersInState = this.$store.state.phenotypeFilters
-
-        const phenotypeFilter = filtersInState
-          .filter(x => selectedPhenotypeFilters.indexOf(x) === -1)
-          .concat(selectedPhenotypeFilters.filter(x => filtersInState.indexOf(x) === -1))[0]
-
+        const previousFilters = this.$store.state.phenotypeFilters
         this.$store.commit(SET_PHENOTYPE_FILTERS, selectedPhenotypeFilters)
-        if (selectedPhenotypeFilters.length > filtersInState.length) {
-          // Filter added
+
+        const phenotypeFilter = previousFilters
+          .filter(x => selectedPhenotypeFilters.indexOf(x) < 0)
+          .concat(selectedPhenotypeFilters.filter(x => previousFilters.indexOf(x) < 0))[0]
+
+        if (selectedPhenotypeFilters.length > previousFilters.length) {
           this.$store.dispatch(COMPUTE_SCORE, phenotypeFilter)
         } else {
-          // Filter removed
           this.$store.commit(REMOVE_GENE_NETWORK_SCORES, phenotypeFilter)
           this.$store.commit(UPDATE_VARIANT_SCORES)
         }
       },
       activationChanged (phenotypeId) {
-        // FIXME Recompute score on active toggle as well
         this.$store.commit(TOGGLE_ACTIVE_PHENOTYPE_FILTERS, phenotypeId)
+        this.$store.commit(UPDATE_VARIANT_SCORES)
       }
     },
     components: {
