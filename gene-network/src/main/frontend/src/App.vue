@@ -4,6 +4,7 @@
       <div class="col-md-12">
         <b-card show-header class="mb-2">
           <h2 align="center" slot="header" class="text-muted">Diagnostics platform</h2>
+          <b-alert variant="info" show><h3>BETA version</h3></b-alert>
           Diagnostics platform created with MOLGENIS
           <span v-if="entityTypeId != null">Currently viewing patient <strong>{{entityTypeId}}</strong></span>
         </b-card>
