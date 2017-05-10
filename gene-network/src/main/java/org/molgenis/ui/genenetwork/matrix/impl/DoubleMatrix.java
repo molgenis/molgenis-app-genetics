@@ -50,7 +50,12 @@ class DoubleMatrix
 		if (column > matrix.getColumnCount()) throw new IndexOutOfBoundsException(
 				"Index [" + column + "] is greater than the number of columns in the matrix [" + matrix.getColumnCount()
 						+ "]");
-		return matrix.getAsDouble(row, column);
+		Double result = matrix.getAsDouble(row, column);
+		if (result.isNaN())
+		{
+			throw new MolgenisDataException("No score found");
+		}
+		return result;
 	}
 
 	public double getValueByName(String row, String column)

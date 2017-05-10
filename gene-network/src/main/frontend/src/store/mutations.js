@@ -97,6 +97,8 @@ export default {
    * @param variants list of variant objects retrieved from the database
    */
   [SET_VARIANTS] (state, variants) {
+    // TODO Split EFFECT field on pipe and add fields to entity.
+    // TODO Add fields: Gavin reason, ???
     state.variants = variants
   },
   /**
@@ -107,13 +109,14 @@ export default {
    */
   [UPDATE_VARIANT_SCORES] (state) {
     state.variants = state.variants.map(function (variantEntity) {
-      // TODO Split variantEntity.EFFECT on pipe and add fields to entity.
       let totalSum = 0
       state.phenotypeFilters.map(function (phenotypeFilter) {
         if (phenotypeFilter.isActive) {
           const phenotypeId = phenotypeFilter.id
           const scoreMap = state.geneNetworkScores[phenotypeId]
-          totalSum = totalSum + scoreMap[variantEntity.Gene_Name]
+          if (scoreMap !== undefined) {
+            totalSum = totalSum + scoreMap[variantEntity.Gene_Name]
+          }
         }
       })
       variantEntity.totalScore = totalSum

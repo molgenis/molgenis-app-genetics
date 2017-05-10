@@ -113,12 +113,14 @@ public class MatrixServiceImpl implements MatrixService
 		for (String row : rows.split(","))
 		{
 			MatrixMapper rowMapper = rowMappingMap.get(entityName);
-			if (rowMapper != null) row = rowMapper.map(row);
+			String translatedRow;
+			if (rowMapper != null) translatedRow = rowMapper.map(row);
+			else translatedRow = row;
 			for (String column : columns.split(","))
 			{
 				MatrixMapper columnMapper = columnMappingMap.get(entityName);
 				if (columnMapper != null) column = columnMapper.map(column);
-				results.add(Score.createScore(column, row, matrix.getValueByName(row, column)));
+				results.add(Score.createScore(column, row, matrix.getValueByName(translatedRow, column)));
 			}
 		}
 		return results;
