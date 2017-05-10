@@ -19,7 +19,7 @@
             </router-link>
           </b-nav-item>
           <b-nav-item>
-            <router-link to="upload">
+            <router-link to="/upload">
               <a>Import data</a>
             </router-link>
           </b-nav-item>
