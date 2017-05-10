@@ -19,7 +19,7 @@ const state = {
   phenotypeFilters: [],
   variants: [],
   geneNetworkScores: {},
-  diagnosticsPackageId: window.__INITIAL_STATE__.diagnosticsPackageId,
+  diagnosticsPackageId: window.__INITIAL_STATE__ ? window.__INITIAL_STATE__.diagnosticsPackageId : 'base',
   matrixEntityId: window.__INITIAL_STATE__.matrixEntityId
 }
 
