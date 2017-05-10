@@ -13,32 +13,27 @@
   export default {
     name: 'variant-table',
     props: ['variants'],
-    // TODO Relevant variants and all variants
     data: function () {
       return {
         fields: {
           '#CHROM': {
-            label: 'Chrom'
-          },
-          'POS': {
-            label: 'Position'
-          },
-          'REF': {
-            label: 'REF'
-          },
-          'ALT': {
-            label: 'ALT'
+            label: 'Chromosome'
           },
           'Gene_Name': {
             label: 'Gene'
           },
-          'totalScore': {
-            label: 'Score'
+          'cDNA': {
+            label: 'cDNA'
+          },
+          'pChange': {
+            label: 'Protein change'
+          },
+          'gavinReason': {
+            label: 'Gavin Reason'
           }
         },
         filter: null
       }
     }
-
   }
 </script>

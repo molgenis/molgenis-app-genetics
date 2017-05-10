@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <b-alert variant="info" show><h3>Alpha version</h3></b-alert>
+      <b-alert variant="info" show><h3>BETA version</h3></b-alert>
       <br>
       <h4>Making it work</h4>
       <hr>
