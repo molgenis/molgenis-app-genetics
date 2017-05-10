@@ -13,7 +13,6 @@
   export default {
     name: 'variant-table',
     props: ['variants'],
-    // TODO Add columns: Gavin reason
     // TODO Relevant variants and all variants
     data: function () {
       return {

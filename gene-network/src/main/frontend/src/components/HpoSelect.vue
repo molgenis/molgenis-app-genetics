@@ -69,7 +69,7 @@
           .then(response => {
             this.phenotypes = response.items.map(function (phenotype) {
               const ontologyTermIRI = phenotype.ontologyTermIRI
-              const phenotypeId = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace('_', ':')
+              const phenotypeId = ontologyTermIRI.substring(ontologyTermIRI.lastIndexOf('/') + 1).replace(':', '_')
               return {'id': phenotypeId, 'label': phenotype.ontologyTermName, 'isActive': true}
             })
           })
