@@ -7,6 +7,7 @@ import PhenotypeSelectionContainer from 'components/PhenotypeSelectionContainer'
 Vue.use(VueRouter)
 export default new VueRouter({
   mode: 'history',
+  base: window.__INITIAL_STATE__.baseUrl,
   routes: [
     {
       path: '/',
