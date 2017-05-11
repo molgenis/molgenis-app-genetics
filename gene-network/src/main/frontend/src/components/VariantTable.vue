@@ -30,9 +30,6 @@
           },
           'gavinReason': {
             label: 'Gavin Reason'
-          },
-          'totalScore': {
-            label: 'score'
           }
         },
         filter: null
