@@ -1,4 +1,4 @@
-import { get, login, submitForm } from '../MolgenisApi'
+import { get, login, submitForm } from '../molgenisApi'
 import { CREATE_ALERT, REMOVE_ALERT, SET_VARIANTS, SET_PATIENT_TABLES, SET_TOKEN, UPDATE_JOB, UPDATE_JOB_HREF, SET_GENE_NETWORK_SCORES, UPDATE_VARIANT_SCORES } from './mutations'
 
 export const GET_PATIENT = '__GET_PATIENT__'

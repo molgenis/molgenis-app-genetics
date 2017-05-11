@@ -51,10 +51,10 @@ public class MatrixServiceImplTest
 	{
 		List<Score> results = matrixService.getValueByNames("test", "gene1,gene2", "hpo234,hpo123");
 
-		assertTrue(results.contains(Score.createScore("gene1", "hpo123", 1.123)));
-		assertTrue(results.contains(Score.createScore("gene1", "hpo234", 1.234)));
-		assertTrue(results.contains(Score.createScore("gene2", "hpo123", 2.123)));
-		assertTrue(results.contains(Score.createScore("gene2", "hpo234", 2.234)));
+		assertTrue(results.contains(Score.createScore("hpo123", "gene1", 1.123)));
+		assertTrue(results.contains(Score.createScore("hpo234", "gene1", 1.234)));
+		assertTrue(results.contains(Score.createScore("hpo123", "gene2", 2.123)));
+		assertTrue(results.contains(Score.createScore("hpo234", "gene2", 2.234)));
 		assertEquals(results.size(), 4);
 	}
 }

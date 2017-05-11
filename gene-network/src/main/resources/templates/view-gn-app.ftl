@@ -10,7 +10,7 @@
         <div id="app"></div>
         <script type="text/javascript">
             window.__INITIAL_STATE__ = {
-                'diagnosticsPackageId':  'aaaacw6j3lvrxfrbucrmpnqaae',
+                'diagnosticsPackageId':  '${diagnosticsPackageId}',
                 'matrixEntityId': 'test',
                 'baseUrl': '${baseUrl}',
                 'session' : {
