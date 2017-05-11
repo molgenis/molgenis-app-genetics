@@ -16,6 +16,8 @@ sync(store, router)
 
 Vue.use(BootstrapVue)
 
+router.replace('/home')
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

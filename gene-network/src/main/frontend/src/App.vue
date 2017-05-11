@@ -3,36 +3,30 @@
     <div class="row">
       <div class="col-md-12">
         <b-card show-header class="mb-2">
-          <h2 align="center" slot="header" class="text-muted">Diagnostics platform</h2>
-          <b-alert variant="info" show><h3>BETA version</h3></b-alert>
+          <h2 align="center" slot="header" class="text-muted">Diagnostics platform <span class="badge badge-default">BETA VERSION</span></h2>
           Diagnostics platform created with MOLGENIS
           <span v-if="entityTypeId != null">Currently viewing patient <strong>{{entityTypeId}}</strong></span>
         </b-card>
       </div>
     </div>
     <alert-container v-if="showAlert"></alert-container>
-    <div class="row">
-      <div class="col-md-3">
+    <div class="row main-nav">
+      <div class="col">
         <b-nav tabs>
-          <b-nav-item>
-            <router-link to="/">
+          <b-nav-item to="/home">
               <a>Home</a>
-            </router-link>
           </b-nav-item>
-          <b-nav-item>
-            <router-link to="/upload">
+          <b-nav-item to="/upload">
               <a>Import data</a>
-            </router-link>
           </b-nav-item>
-        </b-nav>
-        <b-nav vertical>
-          <b-nav-item><span class="text-muted">Patients</span></b-nav-item>
-          <b-nav-item v-for="patient in patients">
-            <router-link :to="{ name: 'view', params: { entityTypeId: patient.id }}">{{patient.label}}</router-link>
+          <b-nav-item to="/patients">
+            <a>Patients</a>
           </b-nav-item>
         </b-nav>
       </div>
-      <div class="col-md-9">
+    </div>
+    <div class="row">
+      <div class="col-md-12">
         <router-view></router-view>
       </div>
     </div>
@@ -40,6 +34,10 @@
 </template>
 
 <style>
+  .main-nav {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
   .card-header {
     background-color: #b5d592!important;
   }
