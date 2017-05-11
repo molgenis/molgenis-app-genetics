@@ -10,7 +10,7 @@ describe('mutations', () => {
           type: null
         }
       }
-      var alert = {
+      const alert = {
         message: 'Hello',
         type: null
       }
@@ -72,22 +72,29 @@ describe('mutations', () => {
     })
   })
 
-  // describe('Testing mutation UPDATE_JOB', () => {
-  //   it('Updates the job', () => {
-  //     const state = {
-  //       job: null
-  //     }
-  //     //wtf does this function do?
-  //   })
-  // })
+  describe('Testing mutation UPDATE_JOB', () => {
+    it('Updates the job', () => {
+      const state = {
+        job: null
+      }
+      const job = {
+        status: "FINISHED",
+        message: "Imported 3 demopatient entities.<br />",
+        importedEntities: "demopatient",
+        username:"admin"
+      }
+      mutations.__UPDATE_JOB__(state, job)
+      expect(state.job).to.equal(job)
+    })
+  })
 
   describe('Testing mutation UPDATE_JOB_HREF', () => {
     it('Updates the jobHref', () => {
       const state = {
         jobHref: null
       }
-      mutations.__UPDATE_JOB_HREF__(state, "/api/v2/sys_ImportRun/aaaacw7w2cd523srqr5qxfqaae")
-      expect(state.jobHref).to.equal("/api/v2/sys_ImportRun/aaaacw7w2cd523srqr5qxfqaae")
+      mutations.__UPDATE_JOB_HREF__(state, '/api/v2/sys_ImportRun/aaaacw7w2cd523srqr5qxfqaae')
+      expect(state.jobHref).to.equal('/api/v2/sys_ImportRun/aaaacw7w2cd523srqr5qxfqaae')
     })
   })
 
@@ -98,6 +105,34 @@ describe('mutations', () => {
       }
       mutations.__SET_TOKEN__(state, 'token')
       expect(state.token).to.equal('token')
+    })
+  })
+
+  describe('Testing mutation SET_PATIENT_TABLES', () => {
+    it('Sets the patients', () => {
+      const state = {
+        patients: []
+      }
+      const patients = [
+        {id: 'demopatient', label: 'demopatient', _href: '/api/v2/sys_md_EntityType/demopatient'},
+        {id: 'demopatient1', label: 'demopatient1', _href: '/api/v2/sys_md_EntityType/demopatient1'}
+      ]
+      mutations.__SET_PATIENT_TABLES__(state, patients)
+      expect(state.patients).to.equal(patients)
+    })
+  })
+
+  describe('Testing mutation SET_PHENOTYPE_FILTERS', () => {
+    it('Sets the phenotype filters', () => {
+      const state = {
+        phenotypeFilters: []
+      }
+      const phenotypeFilters = [
+        {id: "HP_0100280", isActive: true, label: "Crohn's disease"},
+        {id: "HP_0001249", isActive: true, label: "Intellectual disability"}
+      ]
+      mutations.__SET_PHENOTYPE_FILTERS__(state, phenotypeFilters)
+      expect(state.phenotypeFilters).to.deep.equal(phenotypeFilters)
     })
   })
 })
