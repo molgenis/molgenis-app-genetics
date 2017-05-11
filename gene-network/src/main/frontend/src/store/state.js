@@ -1,3 +1,5 @@
+export const INITIAL_STATE = window.__INITIAL_STATE__ || {}
+
 const state = {
   session: {
     server: {
@@ -19,8 +21,8 @@ const state = {
   phenotypeFilters: [],
   variants: [],
   geneNetworkScores: {},
-  diagnosticsPackageId: window.__INITIAL_STATE__ ? window.__INITIAL_STATE__.diagnosticsPackageId : 'base',
-  matrixEntityId: window.__INITIAL_STATE__.matrixEntityId
+  diagnosticsPackageId: INITIAL_STATE.diagnosticsPackageId,
+  matrixEntityId: INITIAL_STATE.matrixEntityId
 }
 
 export default state
