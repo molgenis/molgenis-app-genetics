@@ -78,10 +78,10 @@ describe('mutations', () => {
         job: null
       }
       const job = {
-        status: "FINISHED",
-        message: "Imported 3 demopatient entities.<br />",
-        importedEntities: "demopatient",
-        username:"admin"
+        status: 'FINISHED',
+        message: 'Imported 3 demopatient entities.<br />',
+        importedEntities: 'demopatient',
+        username: 'admin'
       }
       mutations.__UPDATE_JOB__(state, job)
       expect(state.job).to.equal(job)
@@ -128,11 +128,65 @@ describe('mutations', () => {
         phenotypeFilters: []
       }
       const phenotypeFilters = [
-        {id: "HP_0100280", isActive: true, label: "Crohn's disease"},
-        {id: "HP_0001249", isActive: true, label: "Intellectual disability"}
+        {id: 'HP_0100280', isActive: true, label: 'Crohn\'s disease'},
+        {id: 'HP_0001249', isActive: true, label: 'Intellectual disability'}
       ]
       mutations.__SET_PHENOTYPE_FILTERS__(state, phenotypeFilters)
       expect(state.phenotypeFilters).to.deep.equal(phenotypeFilters)
+    })
+  })
+
+  describe('Testing mutation TOGGLE_ACTIVE_PHENOTYPE_FILTERS', () => {
+    it('Toggles phenotype filter to be not active', () => {
+      const state = {
+        phenotypeFilters: [
+          {id: 'HP_0100280', isActive: true, label: 'Crohn\'s disease'},
+          {id: 'HP_0001249', isActive: true, label: 'Intellectual disability'}
+        ]
+      }
+      mutations.__TOGGLE_ACTIVE_PHENOTYPE_FILTERS__(state, 'HP_0100280')
+      expect(state.phenotypeFilters[0].isActive).to.equal(false)
+    })
+  })
+
+  describe('Testing mutation SET_VARIANTS', () => {
+    it('Sets variants', () => {
+      const state = {
+        variants: []
+      }
+      const variants = [
+        {
+          '#CHROM': '6',
+          ALT: 'C',
+          CADD: '-0.272604',
+          CAD_SCALED: '0.765',
+          EFFECT: 'C|LOC101928519|intron_variant|MODIFIER|LOC101928519|transcript|NR_110860.1|pseudogene|5/10|n.721+1698A>G|||||||Benign|genomewide|Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
+          Gene_Name: 'BRCA1',
+          ID: '',
+          INTERNAL_ID: 'Hbc9y7QnOOfHElunTxal8A',
+          POS: 19144144,
+          REF: 'T'
+        }
+      ]
+      mutations.__SET_VARIANTS__(state, variants)
+      const updatedVariants = [
+        {
+          '#CHROM': '6',
+          ALT: 'C',
+          CADD: '-0.272604',
+          CAD_SCALED: '0.765',
+          EFFECT: 'C|LOC101928519|intron_variant|MODIFIER|LOC101928519|transcript|NR_110860.1|pseudogene|5/10|n.721+1698A>G|||||||Benign|genomewide|Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
+          Gene_Name: 'BRCA1',
+          ID: '',
+          INTERNAL_ID: 'Hbc9y7QnOOfHElunTxal8A',
+          POS: 19144144,
+          REF: 'T',
+          cDNA: 'n.721+1698A>G',
+          gavinReason: 'Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
+          pChange: ''
+        }
+      ]
+      expect(state.variants).to.deep.equal(updatedVariants)
     })
   })
 })
