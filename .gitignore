@@ -11,3 +11,4 @@ target/
 **/.factorypath
 **/node_modules
 **/node
+**/coverage
