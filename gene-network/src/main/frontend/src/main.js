@@ -1,4 +1,6 @@
 import 'es6-promise/auto'
+import 'babel-polyfill'
+
 import Vue from 'vue'
 import App from './App'
 import { sync } from 'vuex-router-sync'
