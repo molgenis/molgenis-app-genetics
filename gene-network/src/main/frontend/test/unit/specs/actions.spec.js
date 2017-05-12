@@ -16,11 +16,11 @@ import {
 import actions, { FETCH_JOB, FETCH_PATIENT_TABLES } from 'src/store/actions'
 import * as api from 'src/molgenisApi'
 
-describe('Testing actions', () => {
-  describe('Testing the LOGIN action', () => {
+describe('actions', () => {
+  describe('LOGIN', () => {
     afterEach(() => td.reset())
 
-    it('LOGIN Success', done => {
+    it('should set token on success', done => {
       const mockedResponse = {
         token: 'TOKEN'
       }
@@ -36,7 +36,7 @@ describe('Testing actions', () => {
       ], [], done)
     })
 
-    it('LOGIN Failure', done => {
+    it('should create alert on failure', done => {
       const mockedResponse = {
         errors: [
           {message: 'Bad credentials'}
@@ -55,12 +55,12 @@ describe('Testing actions', () => {
     })
   })
 
-  describe('Testing the FETCH_PATIENT_TABLES action', () => {
+  describe('FETCH_PATIENT_TABLES', () => {
     afterEach(() => td.reset())
 
     const state = {session: {server: {apiUrl: '/api'}}, diagnosticsPackageId: 'packageId', token: 'TOKEN'}
 
-    it('FETCH_PATIENT_TABLES Success', done => {
+    it('should set list of patient tables on success', done => {
       const mockedResponse = {
         items: [
           {
@@ -92,7 +92,7 @@ describe('Testing actions', () => {
       ], [], done)
     })
 
-    it('FETCH_PATIENT_TABLES No commit', done => {
+    it('should do nothing if response has no items', done => {
       const mockedResponse = {
         'items': [
           {
@@ -110,7 +110,7 @@ describe('Testing actions', () => {
       testAction(actions.__FETCH_PATIENT_TABLES__, null, state, [], [], done)
     })
 
-    it('FETCH_PATIENT_TABLES Failure', done => {
+    it('should create alert on failure', done => {
       const mockedResponse = {
         errors: [
           {message: 'No [READ] permission on entity type [Package] with id [sys_md_Package]'}
@@ -133,13 +133,13 @@ describe('Testing actions', () => {
     })
   })
 
-  describe('Testing the GET_PATIENT action', () => {
+  describe('GET_PATIENT', () => {
     afterEach(() => td.reset())
 
     const state = {session: {server: {apiUrl: '/api'}}, token: 'TOKEN'}
     const patientId = 'test_patient'
 
-    it('GET_PATIENT Success', done => {
+    it('should set variants on success', done => {
       const mockedResponse = {
         meta: 'metadata',
         items: [
@@ -163,7 +163,7 @@ describe('Testing actions', () => {
       ], [], done)
     })
 
-    it('GET_PATIENT Failure', done => {
+    it('should create alert on failure', done => {
       const mockedResponse = {
         errors: [
           {message: 'Unknown error'}
@@ -186,7 +186,7 @@ describe('Testing actions', () => {
     })
   })
 
-  describe('Testing the COMPUTE_SCORE action', () => {
+  describe('COMPUTE_SCORE', () => {
     const phenotypeFilter = {id: 'HP_1234567890', label: 'Test disease'}
     const matrixEntityId = 'matrixEntityId'
     const rows = 'Gene1,Gene2,Gene3'
@@ -202,7 +202,7 @@ describe('Testing actions', () => {
       ]
     }
 
-    it('COMPUTE_SCORE Success', done => {
+    it('should set gene network scores, add scores to variants and remove alerts on success', done => {
       const mockedResponse = [
         {column: 'HP_1234567890', row: 'Gene1', score: 1},
         {column: 'HP_1234567890', row: 'Gene2', score: 2},
@@ -227,7 +227,7 @@ describe('Testing actions', () => {
       ], [], done)
     })
 
-    it('COMPUTE_SCORE No score for selected phenotype', done => {
+    it('should create alert when no score is found for the selected phenotype', done => {
       const mockedResponse = 'Unexpected token < in JSON string'
 
       const get = td.function('api.get')
@@ -245,7 +245,7 @@ describe('Testing actions', () => {
       ], [], done)
     })
 
-    it('COMPUTE_SCORE Failure', done => {
+    it('should create alert on failure', done => {
       const mockedResponse = {
         errors: [
           {message: 'Something went wrong'}
@@ -268,7 +268,7 @@ describe('Testing actions', () => {
     })
   })
 
-  describe('Testing the IMPORT_FILE action', () => {
+  describe('IMPORT_FILE', () => {
     afterEach(() => td.reset())
 
     const state = {token: 'TOKEN'}
@@ -280,7 +280,7 @@ describe('Testing actions', () => {
       'notify': false
     }
 
-    it('IMPORT_FILE Success', done => {
+    it('should set existing job to null, update the jobHref and start polling for job status on success', done => {
       const mockedResponse = '/api/v2/sys_ImportRun/import_job_id'
 
       const submitForm = td.function('api.submitForm')
@@ -296,7 +296,7 @@ describe('Testing actions', () => {
       ], done)
     })
 
-    it('IMPORT_FILE Failure', done => {
+    it('should set existing job to null and create an alert on failure ', done => {
       const mockedResponse = 'Could not import file'
 
       const submitForm = td.function('api.submitForm')
@@ -315,11 +315,11 @@ describe('Testing actions', () => {
     })
   })
 
-  describe('Testing the FETCH_JOB action', () => {
+  describe('FETCH_JOB', () => {
     afterEach(() => td.reset())
 
     const state = {jobHref: '/v2/api/jobHref', token: 'TOKEN'}
-    it('FETCH_JOB with status FINISHED', done => {
+    it('should create an alert, set existing job to null and set list of patient of patient tables when job is finished', done => {
       const mockedResponse = {
         status: 'FINISHED',
         importedEntities: 'test_entity'
@@ -343,7 +343,7 @@ describe('Testing actions', () => {
       ], done)
     })
 
-    it('FETCH_JOB with status FAILED', done => {
+    it('should create an alert and set existing job to null when job has failed', done => {
       const mockedResponse = {
         status: 'FAILED',
         message: 'Test failure'
@@ -365,7 +365,7 @@ describe('Testing actions', () => {
       ], [], done)
     })
 
-    it('FETCH_JOB with status RUNNING', done => {
+    it('should update current job when job is running', done => {
       const mockedResponse = {
         status: 'RUNNING'
       }
