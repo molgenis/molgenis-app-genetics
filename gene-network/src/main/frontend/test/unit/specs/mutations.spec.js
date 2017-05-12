@@ -147,6 +147,17 @@ describe('mutations', () => {
       mutations.__TOGGLE_ACTIVE_PHENOTYPE_FILTERS__(state, 'HP_0100280')
       expect(state.phenotypeFilters[0].isActive).to.equal(false)
     })
+
+    it('Toggles phenotype filter to be active', () => {
+      const state = {
+        phenotypeFilters: [
+          {id: 'HP_0100280', isActive: true, label: 'Crohn\'s disease'},
+          {id: 'HP_0001249', isActive: false, label: 'Intellectual disability'}
+        ]
+      }
+      mutations.__TOGGLE_ACTIVE_PHENOTYPE_FILTERS__(state, 'HP_0001249')
+      expect(state.phenotypeFilters[0].isActive).to.equal(true)
+    })
   })
 
   describe('Testing mutation SET_VARIANTS', () => {
@@ -187,6 +198,114 @@ describe('mutations', () => {
         }
       ]
       expect(state.variants).to.deep.equal(updatedVariants)
+    })
+  })
+
+  describe('Testing mutation UPDATE_VARIANT_SCORES', () => {
+    it('Calculates the sum of the score of variant scores (Both phenotypes active)', () => {
+      const state = {
+        phenotypeFilters: [
+          {id: 'HP_0100280', isActive: true, label: 'Crohn\'s disease'},
+          {id: 'HP_0001249', isActive: true, label: 'Intellectual disability'}
+        ],
+        variants: [
+          {
+            '#CHROM': '6',
+            ALT: 'C',
+            CADD: '-0.272604',
+            CAD_SCALED: '0.765',
+            EFFECT: 'C|LOC101928519|intron_variant|MODIFIER|LOC101928519|transcript|NR_110860.1|pseudogene|5/10|n.721+1698A>G|||||||Benign|genomewide|Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
+            Gene_Name: 'BRCA1',
+            ID: '',
+            INTERNAL_ID: 'Hbc9y7QnOOfHElunTxal8A',
+            POS: 19144144,
+            REF: 'T',
+            cDNA: 'n.721+1698A>G',
+            gavinReason: 'Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
+            pChange: ''
+          }
+        ],
+        geneNetworkScores: {
+          HP_0001249: {
+            BRCA1: 1.234
+          },
+          HP_0100280: {
+            BRCA1: 1.123
+          }
+        }
+      }
+      mutations.__UPDATE_VARIANT_SCORES__(state)
+      expect(state.variants[0].totalScore).to.equal(2.357)
+    })
+    it('Calculates the sum of the score of variant scores (One phenotype active)', () => {
+      const state = {
+        phenotypeFilters: [
+          {id: 'HP_0100280', isActive: false, label: 'Crohn\'s disease'},
+          {id: 'HP_0001249', isActive: true, label: 'Intellectual disability'}
+        ],
+        variants: [
+          {
+            '#CHROM': '6',
+            ALT: 'C',
+            CADD: '-0.272604',
+            CAD_SCALED: '0.765',
+            EFFECT: 'C|LOC101928519|intron_variant|MODIFIER|LOC101928519|transcript|NR_110860.1|pseudogene|5/10|n.721+1698A>G|||||||Benign|genomewide|Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
+            Gene_Name: 'BRCA1',
+            ID: '',
+            INTERNAL_ID: 'Hbc9y7QnOOfHElunTxal8A',
+            POS: 19144144,
+            REF: 'T',
+            cDNA: 'n.721+1698A>G',
+            gavinReason: 'Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
+            pChange: ''
+          }
+
+        ],
+        geneNetworkScores: {
+          HP_0001249: {
+            BRCA1: 1.234
+          },
+          HP_0100280: {
+            BRCA1: 1.123
+          }
+        }
+      }
+      mutations.__UPDATE_VARIANT_SCORES__(state)
+      expect(state.variants[0].totalScore).to.equal(1.234)
+    })
+  })
+
+  describe('Testing mutation SET_GENE_NETWORK_SCORES', () => {
+    it('Sets the gene network scores', () => {
+      const state = {
+        geneNetworkScores: {}
+      }
+      const scores = [
+        {
+          column: 'HP_0100280',
+          row: 'BRCA1',
+          value: 1.123
+        },
+        {
+          column: 'HP_0100280',
+          row: 'BRCA2',
+          value: 2.123
+        },
+        {
+          column: 'HP_0100280',
+          row: 'BRCA3',
+          value: 3.123
+        }
+      ]
+      mutations.__SET_GENE_NETWORK_SCORES__(state, scores)
+      const geneNetworkScores = {
+        HP_0100280: {
+          BRCA1: 1.123,
+          BRCA2: 2.123,
+          BRCA3: 3.123
+        }
+      }
+      expect(state.geneNetworkScores).to.deep.equal(geneNetworkScores)
     })
   })
 })
