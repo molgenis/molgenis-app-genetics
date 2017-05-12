@@ -308,4 +308,56 @@ describe('mutations', () => {
       expect(state.geneNetworkScores).to.deep.equal(geneNetworkScores)
     })
   })
+
+  describe('Testing mutation REMOVE_GENE_NETWORK_SCORES', () => {
+    it('Removes a deselected gene network score', () => {
+      const state = {
+        geneNetworkScores: {
+          HP_0001249: {
+            BRCA1: 1.234,
+            BRCA2: 2.234,
+            BRCA3: 3.234
+          },
+          HP_0100280: {
+            BRCA1: 1.123,
+            BRCA2: 2.123,
+            BRCA3: 3.123
+          }
+        }
+      }
+      const removedFilter = {
+        id: 'HP_0001249',
+        isActive: true,
+        label: 'Intellectual disability'
+      }
+      mutations.__REMOVE_GENE_NETWORK_SCORES__(state, removedFilter)
+      const geneNetworkScores = {
+        HP_0100280: {
+          BRCA1: 1.123,
+          BRCA2: 2.123,
+          BRCA3: 3.123
+        }
+      }
+      expect(state.geneNetworkScores).to.deep.equal(geneNetworkScores)
+    })
+    it('Removes last deselected gene network score', () => {
+      const state = {
+        geneNetworkScores: {
+          HP_0100280: {
+            BRCA1: 1.123,
+            BRCA2: 2.123,
+            BRCA3: 3.123
+          }
+        }
+      }
+      const removedFilter = {
+        id: 'HP_0100280',
+        isActive: true,
+        label: 'Crohn\'s disease'
+      }
+      mutations.__REMOVE_GENE_NETWORK_SCORES__(state, removedFilter)
+      const geneNetworkScores = {}
+      expect(state.geneNetworkScores).to.deep.equal(geneNetworkScores)
+    })
+  })
 })
