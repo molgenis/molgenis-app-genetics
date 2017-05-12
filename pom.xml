@@ -8,13 +8,13 @@
         <version>7</version>
     </parent>
     <groupId>org.molgenis</groupId>
-    <artifactId>molgenis-ui</artifactId>
+    <artifactId>molgenis-genetics</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>molgenis-ui</name>
+    <name>molgenis-genetics</name>
     <description>
-        MOLGENIS UI is a collection of frontend applications built using the MOLGENIS platform as a dependency
+        MOLGENIS Genetics is a repository containing modules and features for interacting with, searching through, and visualising genetic data
     </description>
     <url>http://www.molgenis.org</url>
     <licenses>
@@ -24,7 +24,7 @@
     </licenses>
     <scm>
         <connection>scm:git:git://github.com/molgenis/molgenis.git</connection>
-        <url>https://github.com/molgenis/molgenis-ui</url>
+        <url>https://github.com/molgenis/molgenis-genetics</url>
     </scm>
 
     <properties>
