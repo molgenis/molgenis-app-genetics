@@ -1,1 +1,1 @@
-# molgenis-genetics-platform
+# molgenis-genetics
