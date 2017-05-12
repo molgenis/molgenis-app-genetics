@@ -4,7 +4,7 @@ module.exports = function (config) {
   config.set({
     browsers: ['PhantomJS'], // Chrome, ChromeCanary, ...
     frameworks: ['mocha', 'sinon-chai'],
-    reporters: ['spec', 'coverage'],
+    reporters: ['spec', 'junit'],
     files: [
       '../../node_modules/es6-promise/dist/es6-promise.auto.js',
       '../../node_modules/babel-polyfill/dist/polyfill.js',
@@ -16,11 +16,10 @@ module.exports = function (config) {
     webpackMiddleware: {
       noInfo: true
     },
-    coverageReporter: {
-      dir: './coverage',
-      reporters: [
-        { type: 'cobertura', subdir: 'cobertura' }
-      ]
+    junitReporter: {
+      outputDir: '../../../../../target/surefire-reports',
+      outputFile: 'TEST-results.xml',
+      useBrowserName: false
     }
   })
 }

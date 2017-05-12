@@ -16,6 +16,7 @@
   "dependencies": {
     "bootstrap-vue": "^0.14.0",
     "isomorphic-fetch": "^2.2.1",
+    "karma-junit-reporter": "^1.2.0",
     "moment": "^2.18.1",
     "url-polyfill": "^1.0.4",
     "vue": "^2.2.6",
