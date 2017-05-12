@@ -13,7 +13,7 @@ import {
   UPDATE_VARIANT_SCORES
 } from 'src/store/mutations'
 
-import actions, { FETCH_JOB } from 'src/store/actions'
+import actions, { FETCH_JOB, FETCH_PATIENT_TABLES } from 'src/store/actions'
 import * as api from 'src/molgenisApi'
 
 describe('Testing actions', () => {
@@ -315,21 +315,75 @@ describe('Testing actions', () => {
     })
   })
 
-  // describe('Testing the FETCH_JOB action', () => {
-  //   afterEach(() => td.reset())
-  //
-  //   it('FETCH_JOB FINISHED', done => {
-  //
-  //   })
-  //
-  //   it('FETCH_JOB FAILED', done => {
-  //
-  //   })
-  //
-  //   it('FETCH_JOB RUNNING', done => {
-  //
-  //   })
-  // })
+  describe('Testing the FETCH_JOB action', () => {
+    afterEach(() => td.reset())
+
+    const state = {jobHref: '/v2/api/jobHref', token: 'TOKEN'}
+    it('FETCH_JOB with status FINISHED', done => {
+      const mockedResponse = {
+        status: 'FINISHED',
+        importedEntities: 'test_entity'
+      }
+
+      const get = td.function('api.get')
+      td.when(get({apiUrl: '/v2/api/jobHref'}, '', 'TOKEN'))
+        .thenResolve(mockedResponse)
+      td.replace(api, 'get', get)
+
+      const payload = {
+        message: 'Import succeeded test_entity',
+        type: 'info'
+      }
+
+      testAction(actions.__FETCH_JOB__, null, state, [
+        {type: CREATE_ALERT, payload: payload},
+        {type: UPDATE_JOB, payload: null}
+      ], [
+        {type: FETCH_PATIENT_TABLES}
+      ], done)
+    })
+
+    it('FETCH_JOB with status FAILED', done => {
+      const mockedResponse = {
+        status: 'FAILED',
+        message: 'Test failure'
+      }
+
+      const get = td.function('api.get')
+      td.when(get({apiUrl: '/v2/api/jobHref'}, '', 'TOKEN'))
+        .thenResolve(mockedResponse)
+      td.replace(api, 'get', get)
+
+      const payload = {
+        message: 'Import failed. cause: Test failure',
+        type: 'warning'
+      }
+
+      testAction(actions.__FETCH_JOB__, null, state, [
+        {type: CREATE_ALERT, payload: payload},
+        {type: UPDATE_JOB, payload: null}
+      ], [], done)
+    })
+
+    it('FETCH_JOB with status RUNNING', done => {
+      const mockedResponse = {
+        status: 'RUNNING'
+      }
+
+      const get = td.function('api.get')
+      td.when(get({apiUrl: '/v2/api/jobHref'}, '', 'TOKEN'))
+        .thenResolve(mockedResponse)
+      td.replace(api, 'get', get)
+
+      const payload = {
+        status: 'RUNNING'
+      }
+
+      testAction(actions.__FETCH_JOB__, null, state, [
+        {type: UPDATE_JOB, payload: payload}
+      ], [], done)
+    })
+  })
 })
 
 // helper for testing action with expected mutations

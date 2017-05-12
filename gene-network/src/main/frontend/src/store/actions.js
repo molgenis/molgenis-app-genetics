@@ -60,7 +60,6 @@ export default {
           commit(CREATE_ALERT, {message: 'Import succeeded ' + job.importedEntities, type: 'info'})
           commit(UPDATE_JOB, null)
           dispatch(FETCH_PATIENT_TABLES)
-          // TODO: go to screen 2, but for which of them?
         } else if (job.status === 'FAILED') {
           clearInterval(interval)
           commit(CREATE_ALERT, {message: 'Import failed. cause: ' + job.message, type: 'warning'})
