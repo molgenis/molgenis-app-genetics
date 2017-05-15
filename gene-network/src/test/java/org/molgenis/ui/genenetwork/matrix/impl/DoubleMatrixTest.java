@@ -4,6 +4,7 @@ import org.molgenis.util.ResourceUtils;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import static org.molgenis.ui.genenetwork.matrix.impl.DoubleMatrixFactory.createDoubleMatrix;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -16,8 +17,8 @@ public class DoubleMatrixTest
 	@BeforeTest
 	public void setup()
 	{
-		doubleMatrix = new DoubleMatrix(ResourceUtils.getFile(getClass(), "/testmatrix.txt"), '\t');
-		doubleMatrix2 = new DoubleMatrix(ResourceUtils.getFile(getClass(), "/testmatrix2.txt"), '\t');
+		doubleMatrix = createDoubleMatrix(ResourceUtils.getFile(getClass(), "/testmatrix.txt"), '\t');
+		doubleMatrix2 = createDoubleMatrix(ResourceUtils.getFile(getClass(), "/testmatrix2.txt"), '\t');
 	}
 
 	@Test
@@ -40,7 +41,7 @@ public class DoubleMatrixTest
 	public void matrixTest2()
 	{
 		assertEquals(doubleMatrix2.getValueByName("BRCA1", "HP_0100280"), 1.123);
-		assertEquals(doubleMatrix2.getValueByName("BRCA2", "HP_0001249"),2.234);
+		assertEquals(doubleMatrix2.getValueByName("BRCA2", "HP_0001249"), 2.234);
 	}
 
 }

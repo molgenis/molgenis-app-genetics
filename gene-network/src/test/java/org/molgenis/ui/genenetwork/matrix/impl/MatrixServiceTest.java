@@ -1,11 +1,10 @@
 package org.molgenis.ui.genenetwork.matrix.impl;
 
-import org.molgenis.ui.genenetwork.matrix.MatrixService;
-import org.molgenis.ui.genenetwork.matrix.meta.MatrixMetadata;
-import org.molgenis.ui.genenetwork.matrix.model.Score;
 import org.molgenis.data.DataService;
 import org.molgenis.data.Entity;
 import org.molgenis.file.FileStore;
+import org.molgenis.ui.genenetwork.matrix.meta.MatrixMetadata;
+import org.molgenis.ui.genenetwork.matrix.model.Score;
 import org.molgenis.util.ResourceUtils;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -17,7 +16,7 @@ import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class MatrixServiceImplTest
+public class MatrixServiceTest
 {
 
 	private MatrixService matrixService;
@@ -29,7 +28,7 @@ public class MatrixServiceImplTest
 
 		when(entity.getString(MatrixMetadata.FILE_LOCATION))
 				.thenReturn(ResourceUtils.getFile(getClass(), "/testmatrix.txt").getAbsolutePath());
-		when(entity.getString(MatrixMetadata.SEPERATOR)).thenReturn("TAB");
+		when(entity.getString(MatrixMetadata.SEPARATOR)).thenReturn("TAB");
 		when(entity.getIdValue()).thenReturn("test");
 		DataService dataService = mock(DataService.class);
 		when(dataService.findOneById(MatrixMetadata.PACKAGE + "_" + MatrixMetadata.SIMPLE_NAME, "test"))
@@ -37,7 +36,7 @@ public class MatrixServiceImplTest
 
 		FileStore fileStore = mock(FileStore.class);
 
-		matrixService = new MatrixServiceImpl(dataService, fileStore);
+		matrixService = new MatrixService(dataService, fileStore);
 	}
 
 	@Test

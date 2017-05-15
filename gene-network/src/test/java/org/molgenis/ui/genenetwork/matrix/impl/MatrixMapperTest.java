@@ -5,16 +5,17 @@ import org.molgenis.util.ResourceUtils;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import static org.molgenis.ui.genenetwork.matrix.impl.MatrixMapperFactory.createMatrixMapper;
 import static org.testng.Assert.assertEquals;
 
-public class MatrixMapperImplTest
+public class MatrixMapperTest
 {
-	private MatrixMapperImpl matrixMapper;
+	private MatrixMapper matrixMapper;
 
 	@BeforeTest
 	public void setup()
 	{
-		matrixMapper = new MatrixMapperImpl(ResourceUtils.getFile(getClass(), "/mapping.txt"));
+		matrixMapper = createMatrixMapper(ResourceUtils.getFile(getClass(), "/mapping.txt"));
 	}
 
 	@Test
