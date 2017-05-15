@@ -6,20 +6,21 @@ import org.ujmp.core.Matrix;
 
 import static java.util.Objects.requireNonNull;
 
-class DoubleMatrix
+public class DoubleMatrix
 {
 	private Matrix matrix;
-	private TObjectIntHashMap columnMap;
-	private TObjectIntHashMap rowMap;
 
-	private MatrixMapper columnMapper;
-	private MatrixMapper rowMapper;
+	private TObjectIntHashMap columnIndices;
+	private TObjectIntHashMap rowIndices;
 
-	DoubleMatrix(Matrix matrix, TObjectIntHashMap columnMap, TObjectIntHashMap rowMap)
+	private MatrixMapperImpl columnMapper;
+	private MatrixMapperImpl rowMapper;
+
+	public DoubleMatrix(Matrix matrix, TObjectIntHashMap columnIndices, TObjectIntHashMap rowIndices)
 	{
 		this.matrix = requireNonNull(matrix);
-		this.columnMap = requireNonNull(columnMap);
-		this.rowMap = requireNonNull(rowMap);
+		this.columnIndices = requireNonNull(columnIndices);
+		this.rowIndices = requireNonNull(rowIndices);
 	}
 
 	double getValueByIndex(int row, int column)
@@ -49,31 +50,31 @@ class DoubleMatrix
 
 	double getValueByName(String row, String column)
 	{
-		Integer columnIndex = columnMap.get(column);
+		Integer columnIndex = columnIndices.get(column);
 		if (columnIndex == null) throw new MolgenisDataException("Unknown column name [" + column + "]");
 
-		Integer rowIndex = rowMap.get(row);
+		Integer rowIndex = rowIndices.get(row);
 		if (rowIndex == null) throw new MolgenisDataException("Unknown row name [" + row + "]");
 
 		return getValueByIndex(rowIndex, columnIndex);
 	}
 
-	MatrixMapper getColumnMapper()
+	MatrixMapperImpl getColumnMapper()
 	{
 		return this.columnMapper;
 	}
 
-	void setColumnMapper(MatrixMapper columnMapper)
+	void setColumnMapper(MatrixMapperImpl columnMapper)
 	{
 		this.columnMapper = columnMapper;
 	}
 
-	MatrixMapper getRowMapper()
+	MatrixMapperImpl getRowMapper()
 	{
 		return this.rowMapper;
 	}
 
-	void setRowMapper(MatrixMapper rowMapper)
+	void setRowMapper(MatrixMapperImpl rowMapper)
 	{
 		this.rowMapper = rowMapper;
 	}

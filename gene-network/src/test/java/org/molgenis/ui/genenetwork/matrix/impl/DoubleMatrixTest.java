@@ -4,7 +4,7 @@ import org.molgenis.util.ResourceUtils;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import static org.molgenis.ui.genenetwork.matrix.impl.DoubleMatrixFactory.createDoubleMatrix;
+import static org.molgenis.ui.genenetwork.matrix.factory.DoubleMatrixFactory.createDoubleMatrix;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 

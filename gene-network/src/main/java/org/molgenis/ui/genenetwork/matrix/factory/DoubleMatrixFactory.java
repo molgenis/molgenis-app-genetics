@@ -1,7 +1,8 @@
-package org.molgenis.ui.genenetwork.matrix.impl;
+package org.molgenis.ui.genenetwork.matrix.factory;
 
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.molgenis.data.MolgenisDataException;
+import org.molgenis.ui.genenetwork.matrix.impl.DoubleMatrix;
 import org.ujmp.core.Matrix;
 
 import java.io.File;
@@ -11,11 +12,11 @@ import java.util.Map;
 import static com.google.common.collect.Maps.newHashMap;
 import static org.ujmp.core.Matrix.Factory;
 
-class DoubleMatrixFactory
+public class DoubleMatrixFactory
 {
 	private static Map<String, DoubleMatrix> matrices = newHashMap();
 
-	static DoubleMatrix createDoubleMatrix(File file, char separator)
+	public static DoubleMatrix createDoubleMatrix(File file, char separator)
 	{
 		String path = file.getAbsolutePath();
 		if (matrices.containsKey(path))

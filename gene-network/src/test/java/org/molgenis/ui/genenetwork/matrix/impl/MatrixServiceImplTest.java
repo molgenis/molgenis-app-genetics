@@ -16,10 +16,10 @@ import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class MatrixServiceTest
+public class MatrixServiceImplTest
 {
 
-	private MatrixService matrixService;
+	private MatrixServiceImpl matrixServiceImpl;
 
 	@BeforeTest
 	private void setUp()
@@ -36,19 +36,19 @@ public class MatrixServiceTest
 
 		FileStore fileStore = mock(FileStore.class);
 
-		matrixService = new MatrixService(dataService, fileStore);
+		matrixServiceImpl = new MatrixServiceImpl(dataService, fileStore);
 	}
 
 	@Test
 	public void getValueByIndexTest()
 	{
-		assertEquals(1.123, matrixService.getValueByIndex("test", 1, 1));
+		assertEquals(1.123, matrixServiceImpl.getValueByIndex("test", 1, 1));
 	}
 
 	@Test
 	public void getValueByNamesTest()
 	{
-		List<Score> results = matrixService.getValueByNames("test", "gene1,gene2", "hpo234,hpo123");
+		List<Score> results = matrixServiceImpl.getValueByNames("test", "gene1,gene2", "hpo234,hpo123");
 
 		assertTrue(results.contains(Score.createScore("hpo123", "gene1", 1.123)));
 		assertTrue(results.contains(Score.createScore("hpo234", "gene1", 1.234)));
