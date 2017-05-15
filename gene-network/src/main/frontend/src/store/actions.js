@@ -107,7 +107,7 @@ export default {
    *
    * @param commit commits:
    * @param state current state of the application
-   * @param phenotype
+   * @param {!object} phenotypeFilter
    */
   [COMPUTE_SCORE] ({commit, state}, phenotypeFilter) {
     const matrixEntityId = state.matrixEntityId
