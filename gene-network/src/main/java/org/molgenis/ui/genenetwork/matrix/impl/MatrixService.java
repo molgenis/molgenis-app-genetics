@@ -104,22 +104,15 @@ public class MatrixService
 
 		DoubleMatrix doubleMatrix = createDoubleMatrix(new File(fileLocation), separator);
 
-		if (entity.getEntity(COLUMN_MAPPING_FILE) != null) doubleMatrix.setColumnMapper(getColumnMapper(entity));
-		if (entity.getEntity(ROW_MAPPING_FILE) != null) doubleMatrix.setRowMapper(getRowMapper(entity));
+		if (entity.getEntity(COLUMN_MAPPING_FILE) != null) doubleMatrix.setRowMapper(getMapper(entity, COLUMN_MAPPING_FILE));
+		if (entity.getEntity(ROW_MAPPING_FILE) != null) doubleMatrix.setRowMapper(getMapper(entity, ROW_MAPPING_FILE));
 
 		return doubleMatrix;
 	}
 
-	private MatrixMapper getColumnMapper(Entity entity)
+	private MatrixMapper getMapper(Entity entity, String mapping)
 	{
-		FileMeta meta = entity.getEntity(COLUMN_MAPPING_FILE, FileMeta.class);
-		File file = fileStore.getFile(meta.getId());
-		return createMatrixMapper(file);
-	}
-
-	private MatrixMapper getRowMapper(Entity entity)
-	{
-		FileMeta meta = entity.getEntity(ROW_MAPPING_FILE, FileMeta.class);
+		FileMeta meta = entity.getEntity(mapping, FileMeta.class);
 		File file = fileStore.getFile(meta.getId());
 		return createMatrixMapper(file);
 	}
