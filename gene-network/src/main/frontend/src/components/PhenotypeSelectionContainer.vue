@@ -25,8 +25,17 @@
       }
     },
     created: function () {
-      const entityTypeId = this.$route.params.entityTypeId
-      this.$store.dispatch(GET_PATIENT, entityTypeId)
+      this.updatePatient()
+    },
+    watch: {
+      // call again the method if the route changes
+      '$route': 'updatePatient'
+    },
+    methods: {
+      updatePatient () {
+        const entityTypeId = this.$route.params.entityTypeId
+        this.$store.dispatch(GET_PATIENT, entityTypeId)
+      }
     }
   }
 </script>
