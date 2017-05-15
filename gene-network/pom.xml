@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.molgenis</groupId>
-        <artifactId>molgenis-ui</artifactId>
+        <artifactId>molgenis-genetics</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>gene-network</artifactId>
