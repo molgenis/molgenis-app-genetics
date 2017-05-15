@@ -360,4 +360,22 @@ describe('mutations', () => {
       expect(state.geneNetworkScores).to.deep.equal(geneNetworkScores)
     })
   })
+
+  describe('The CLEAR_GENE_NETWORK_SCORES mutation', () => {
+    it('should remove all scores', () => {
+      const state = {
+        geneNetworkScores: {
+          HP_0001249: {
+            BRCA1: 1.234
+          },
+          HP_0100280: {
+            BRCA1: 1.123
+          }
+        }
+      }
+      mutations.__CLEAR_GENE_NETWORK_SCORES__(state)
+      const emptyScore = {}
+      expect(state.geneNetworkScores).to.deep.equal(emptyScore)
+    })
+  })
 })
