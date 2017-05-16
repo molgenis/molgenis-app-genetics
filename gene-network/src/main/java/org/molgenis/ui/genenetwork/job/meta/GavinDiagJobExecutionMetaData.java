@@ -1,4 +1,4 @@
-package org.molgenis.ui.genenetwork.job;
+package org.molgenis.ui.genenetwork.job.meta;
 
 import org.molgenis.data.index.meta.IndexPackage;
 import org.molgenis.data.jobs.model.JobExecutionMetaData;

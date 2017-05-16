@@ -5,6 +5,7 @@ import org.molgenis.file.FileStore;
 import org.molgenis.gavin.job.JobNotFoundException;
 import org.molgenis.security.user.UserAccountService;
 import org.molgenis.ui.MolgenisPluginController;
+import org.molgenis.ui.genenetwork.job.meta.GavinDiagJobExecutionFactory;
 import org.molgenis.ui.menu.MenuReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,13 +46,14 @@ public class DiagnosticsController extends MolgenisPluginController
 	private final GavinDiagJobExecutionFactory gavinJobExecutionFactory;
 	private final FileStore fileStore;
 	private final UserAccountService userAccountService;
-	private final IdGenerator secureIdGenerator;
+	private final IdGenerator idGenerator;
 	private final MenuReaderService menuReaderService;
 
 	@Autowired
 	public DiagnosticsController(@Qualifier("gavinExecutors") ExecutorService executorService,
 			GavinDiagJobFactory gavinJobFactory, GavinDiagJobExecutionFactory gavinJobExecutionFactory,
-			FileStore fileStore, UserAccountService userAccountService, MenuReaderService menuReaderService, IdGenerator idGenerator)
+			FileStore fileStore, UserAccountService userAccountService, MenuReaderService menuReaderService,
+			IdGenerator idGenerator)
 	{
 		super(URI);
 		this.menuReaderService = menuReaderService;
@@ -60,7 +62,7 @@ public class DiagnosticsController extends MolgenisPluginController
 		this.gavinJobExecutionFactory = requireNonNull(gavinJobExecutionFactory);
 		this.fileStore = requireNonNull(fileStore);
 		this.userAccountService = requireNonNull(userAccountService);
-		this.secureIdGenerator = idGenerator;
+		this.idGenerator = idGenerator;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -77,7 +79,7 @@ public class DiagnosticsController extends MolgenisPluginController
 	/**
 	 * Starts a job to annotate a VCF file
 	 *
-	 * @param inputFile  the uploaded input file
+	 * @param inputFile    the uploaded input file
 	 * @param entityTypeId the name of the file
 	 * @return the ID of the created {@link GavinDiagJobExecution}
 	 * @throws IOException if interaction with the file store fails
@@ -92,7 +94,7 @@ public class DiagnosticsController extends MolgenisPluginController
 			extension = TSV_GZ;
 		}
 
-		final GavinDiagJobExecution gavinJobExecution = gavinJobExecutionFactory.create(secureIdGenerator.generateId());
+		final GavinDiagJobExecution gavinJobExecution = gavinJobExecutionFactory.create(idGenerator.generateId());
 		gavinJobExecution.setFilename(entityTypeId);
 		gavinJobExecution.setUser(userAccountService.getCurrentUser().getUsername());
 		gavinJobExecution.setInputFileExtension(extension);
@@ -151,8 +153,7 @@ public class DiagnosticsController extends MolgenisPluginController
 	}
 
 	@RequestMapping(value = "/job/{jobIdentifier}", method = GET, produces = APPLICATION_JSON_VALUE)
-	public
-	@ResponseBody
+	public @ResponseBody
 	GavinDiagJobExecution getGavinJobExecution(@PathVariable(value = "jobIdentifier") String jobIdentifier)
 			throws JobNotFoundException
 	{

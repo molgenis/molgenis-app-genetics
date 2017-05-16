@@ -24,7 +24,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.of;
-import static org.molgenis.ui.genenetwork.job.GavinDiagJobExecutionMetaData.GAVIN_DIAG_JOB_EXECUTION;
+import static org.molgenis.ui.genenetwork.job.meta.GavinDiagJobExecutionMetaData.GAVIN_DIAG_JOB_EXECUTION;
 
 @Component
 public class GavinDiagJobFactory

@@ -47,8 +47,7 @@ public class GavinImport
 
 	public void importFile(File inputFile, String entityId, String label) throws IOException
 	{
-		VcfRepository repo = new VcfRepository(inputFile, entityId, vcfAttributes, entityTypeFactory,
-				attributeFactory);
+		VcfRepository repo = new VcfRepository(inputFile, entityId, vcfAttributes, entityTypeFactory, attributeFactory);
 
 		Package diagPackage = metaDataService.getPackage(DIAGNOSTICS);
 		Attribute geneAttr = attributeFactory.create().setName(GENE_NAME).setDataType(AttributeType.STRING);
@@ -58,12 +57,11 @@ public class GavinImport
 		Attribute gavinAttr = attributeFactory.create().setName(GAVIN_REASON).setDataType(AttributeType.STRING);
 		EntityType emd = repo.getEntityType();
 		emd.setLabel(label);
-		emd.addAttributes(Arrays.asList(geneAttr,gavinAttr,pChangeAttr,cDnaAttr,classAttr));
+		emd.addAttributes(Arrays.asList(geneAttr, gavinAttr, pChangeAttr, cDnaAttr, classAttr));
 		emd.setPackage(diagPackage);
 		metaDataService.addEntityType(emd);
-		dataService.add(emd.getId(),
-				StreamSupport.stream(repo.spliterator(), false).filter(entity -> hasEffect(entity))
-						.flatMap(entity -> getVariantEntity(emd, entity)));
+		dataService.add(emd.getId(), StreamSupport.stream(repo.spliterator(), false).filter(entity -> hasEffect(entity))
+				.flatMap(entity -> getVariantEntity(emd, entity)));
 	}
 
 	private Stream<Entity> getVariantEntity(EntityType emd, Entity entity)
@@ -78,8 +76,8 @@ public class GavinImport
 		Entity variant = new DynamicEntity(emd);
 		variant.set(entity);
 		variant.set(GENE_NAME, gene);
-		variant.set(P_CHANGE,pChange);
-		variant.set(C_DNA,cDNA);
+		variant.set(P_CHANGE, pChange);
+		variant.set(C_DNA, cDNA);
 		variant.set(GAVIN_REASON, reason);
 		variant.set(CLASSIFICATION, classification);
 		return Collections.singletonList(variant).stream();
