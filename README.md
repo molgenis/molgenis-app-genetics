@@ -15,7 +15,7 @@ After deploying the molgenis-genetics WAR to a server, follow these steps to get
 3. Import a VCF via the GAVIN annotation plugin
 4. View results
 
-In the gene-network/patients/[id] screen, you can search 
+In the gene-network/patients/[id] screen, you can search for HPO phenotypes. Depending on GeneNetwork scores for each variant, the table is sorted
 
 ## Configuring GAVIN annotation for VCF files
 If you enable the 'diagnostics' plugin in the menu, it will allow you to annotate your VCF files
