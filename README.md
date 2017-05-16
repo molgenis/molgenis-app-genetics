@@ -1,9 +1,9 @@
-![Build Status](https://molgenis50.gcc.rug.nl/jenkins/buildStatus/icon?job=molgenis-genetics?raw=true)
+![Build Status](https://molgenis50.gcc.rug.nl/jenkins/buildStatus/icon?job=molgenis-genetics&stye=plastic)
 
 # molgenis-genetics
 This repository contains modules designed for viewing, filtering, annotating, visualising, and querying genetic data.
 
-Code is built upon 
+Code is built using v4.0.0 of the [MOLGENIS](https://github.com/molgenis/molgenis/) platform
 
 ## Deploying GeneNetwork application
 After deploying the molgenis-genetics WAR to a server, follow these steps to get the GeneNetwork application running
