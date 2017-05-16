@@ -24,7 +24,7 @@ public class GavinImport
 {
 	public static final String DIAGNOSTICS = "diagnostics";
 	public static final String GENE_NAME = "Gene_Name";
-	public static final String GAVIN = "Gavin";
+	public static final String GAVIN_REASON = "gavinReason";
 	public static final String P_CHANGE = "pChange";
 	public static final String C_DNA = "cDNA";
 	public static final String CLASSIFICATION = "classification";
@@ -55,7 +55,7 @@ public class GavinImport
 		Attribute cDnaAttr = attributeFactory.create().setName(C_DNA).setDataType(AttributeType.STRING);
 		Attribute pChangeAttr = attributeFactory.create().setName(P_CHANGE).setDataType(AttributeType.STRING);
 		Attribute classAttr = attributeFactory.create().setName(CLASSIFICATION).setDataType(AttributeType.STRING);
-		Attribute gavinAttr = attributeFactory.create().setName(GAVIN).setDataType(AttributeType.STRING);
+		Attribute gavinAttr = attributeFactory.create().setName(GAVIN_REASON).setDataType(AttributeType.STRING);
 		EntityType emd = repo.getEntityType();
 		emd.setLabel(label);
 		emd.addAttributes(Arrays.asList(geneAttr,gavinAttr,pChangeAttr,cDnaAttr,classAttr));
@@ -80,7 +80,7 @@ public class GavinImport
 		variant.set(GENE_NAME, gene);
 		variant.set(P_CHANGE,pChange);
 		variant.set(C_DNA,cDNA);
-		variant.set(GAVIN, reason);
+		variant.set(GAVIN_REASON, reason);
 		variant.set(CLASSIFICATION, classification);
 		return Collections.singletonList(variant).stream();
 	}
