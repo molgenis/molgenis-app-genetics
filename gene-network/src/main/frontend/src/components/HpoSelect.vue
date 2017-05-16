@@ -110,7 +110,7 @@
       vSelect
     },
     created: function () {
-      get(this.$store.state.session.server, '/v2/sys_ont_OntologyTerm?q=ontology.ontologyName==hp').then(response => {
+      get(this.$store.state.session.server, '/v2/sys_ont_OntologyTerm?q=ontology.ontologyName=like=hp_').then(response => {
         if (response.total === 0) {
           this.$store.commit(CREATE_ALERT, {
             'message': 'The HPO ontology has not been uploaded yet. Download the OWL file here: http://human-phenotype-ontology.github.io/downloads.html',
