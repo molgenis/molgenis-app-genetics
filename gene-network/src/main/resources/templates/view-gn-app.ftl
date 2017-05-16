@@ -11,7 +11,7 @@
         <script type="text/javascript">
             window.__INITIAL_STATE__ = {
                 'diagnosticsPackageId':  '${diagnosticsPackageId}',
-                'matrixEntityId': 'test',
+                'matrixEntityId': 'gene_network_matrix_id',
                 'baseUrl': '${baseUrl}',
                 'session' : {
                     'server' : {
