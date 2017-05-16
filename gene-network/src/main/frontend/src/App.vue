@@ -5,7 +5,7 @@
         <b-card show-header class="mb-2">
           <h2 align="center" slot="header" class="text-muted">Diagnostics platform <span class="badge badge-default">BETA VERSION</span>
           </h2>
-          GeneNetwork Variant analysis. 
+          GeneNetwork Variant analysis.
           <span v-if="patientLabel != null">Currently viewing patient <strong>{{patientLabel}}</strong></span>
         </b-card>
       </div>
@@ -59,7 +59,7 @@
       patientLabel: {
         get: function () {
           const entityTypeId = this.$route.params.entityTypeId
-          if (entityTypeId === undefined) {
+          if (entityTypeId === undefined || this.$store.state.patients.length === 0) {
             return null
           }
 
