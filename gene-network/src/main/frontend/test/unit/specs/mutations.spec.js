@@ -191,10 +191,7 @@ describe('mutations', () => {
           ID: '',
           INTERNAL_ID: 'Hbc9y7QnOOfHElunTxal8A',
           POS: 19144144,
-          REF: 'T',
-          cDNA: 'n.721+1698A>G',
-          gavinReason: 'Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
-          pChange: ''
+          REF: 'T'
         }
       ]
       expect(state.variants).to.deep.equal(updatedVariants)
@@ -219,10 +216,7 @@ describe('mutations', () => {
             ID: '',
             INTERNAL_ID: 'Hbc9y7QnOOfHElunTxal8A',
             POS: 19144144,
-            REF: 'T',
-            cDNA: 'n.721+1698A>G',
-            gavinReason: 'Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
-            pChange: ''
+            REF: 'T'
           }
         ],
         geneNetworkScores: {
@@ -254,10 +248,7 @@ describe('mutations', () => {
             ID: '',
             INTERNAL_ID: 'Hbc9y7QnOOfHElunTxal8A',
             POS: 19144144,
-            REF: 'T',
-            cDNA: 'n.721+1698A>G',
-            gavinReason: 'Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
-            pChange: ''
+            REF: 'T'
           }
 
         ],

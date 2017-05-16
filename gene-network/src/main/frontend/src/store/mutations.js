@@ -97,13 +97,6 @@ export default {
    * @param variants list of variant objects retrieved from the database
    */
   [SET_VARIANTS] (state, variants) {
-    variants.map(function (variantEntity) {
-      const split = variantEntity.EFFECT.split('|')
-      variantEntity.cDNA = split[9]
-      variantEntity.pChange = split[10]
-      variantEntity.gavinReason = split[18]
-      return variantEntity
-    })
     state.variants = variants
   },
   /**
