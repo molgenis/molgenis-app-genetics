@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -33,16 +32,19 @@ public class GavinImport
 	private final AttributeFactory attributeFactory;
 	private final DataService dataService;
 	private final MetaDataService metaDataService;
+	private final PackageFactory packageFactory;
 
 	@Autowired
 	public GavinImport(VcfAttributes vcfAttributes, EntityTypeFactory entityTypeFactory,
-			AttributeFactory attributeFactory, DataService dataService, MetaDataService metaDataService)
+			AttributeFactory attributeFactory, DataService dataService, MetaDataService metaDataService,
+			PackageFactory packageFactory)
 	{
 		this.vcfAttributes = vcfAttributes;
 		this.entityTypeFactory = entityTypeFactory;
 		this.attributeFactory = attributeFactory;
 		this.dataService = dataService;
 		this.metaDataService = metaDataService;
+		this.packageFactory = packageFactory;
 	}
 
 	public void importFile(File inputFile, String entityId, String label) throws IOException
@@ -50,6 +52,12 @@ public class GavinImport
 		VcfRepository repo = new VcfRepository(inputFile, entityId, vcfAttributes, entityTypeFactory, attributeFactory);
 
 		Package diagPackage = metaDataService.getPackage(DIAGNOSTICS);
+		if (diagPackage == null)
+		{
+			diagPackage = packageFactory.create(DIAGNOSTICS, "Diagnostics package for storing patient VCF data");
+			diagPackage.setLabel(DIAGNOSTICS);
+			dataService.getMeta().addPackage(diagPackage);
+		}
 		Attribute geneAttr = attributeFactory.create().setName(GENE_NAME).setDataType(AttributeType.STRING);
 		Attribute cDnaAttr = attributeFactory.create().setName(C_DNA).setDataType(AttributeType.STRING);
 		Attribute pChangeAttr = attributeFactory.create().setName(P_CHANGE).setDataType(AttributeType.STRING);
@@ -60,7 +68,7 @@ public class GavinImport
 		emd.addAttributes(Arrays.asList(geneAttr, gavinAttr, pChangeAttr, cDnaAttr, classAttr));
 		emd.setPackage(diagPackage);
 		metaDataService.addEntityType(emd);
-		dataService.add(emd.getId(), StreamSupport.stream(repo.spliterator(), false).filter(entity -> hasEffect(entity))
+		dataService.add(emd.getId(), StreamSupport.stream(repo.spliterator(), false).filter(this::hasEffect)
 				.flatMap(entity -> getVariantEntity(emd, entity)));
 	}
 
@@ -80,7 +88,7 @@ public class GavinImport
 		variant.set(C_DNA, cDNA);
 		variant.set(GAVIN_REASON, reason);
 		variant.set(CLASSIFICATION, classification);
-		return Collections.singletonList(variant).stream();
+		return Stream.of(variant);
 	}
 
 	private boolean hasEffect(Entity entity)
