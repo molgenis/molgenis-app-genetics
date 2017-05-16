@@ -4,7 +4,7 @@
     <div class="row form-group">
       <div class="col-md-12">
         <ul id="selected-phenotype-list">
-          <li v-for="filter in phenotypeFilters" class="row">
+          <li v-for="filter in selectedOptions" class="row">
             <div class="col">
               {{ filter.label }}
             </div>
@@ -12,7 +12,7 @@
               active
             </b-form-checkbox>
           </li>
-          <li v-show="phenotypeFilters.length === 0" class="row"><em>No phenotypes selected</em></li>
+          <li v-show="selectedOptions.length === 0" class="row"><em>No phenotypes selected</em></li>
         </ul>
       </div>
     </div>
@@ -24,7 +24,7 @@
           id="hpo-select"
           :on-search="queryOntologies"
           :options="phenotypes"
-          :onChange="selectionChanged"
+          :value.sync="selectedOptions"
           multiple
           placeholder="Search HPO Ontology..."
           label="label"
@@ -43,7 +43,8 @@
     TOGGLE_ACTIVE_PHENOTYPE_FILTERS,
     CREATE_ALERT,
     REMOVE_GENE_NETWORK_SCORES,
-    UPDATE_VARIANT_SCORES
+    UPDATE_VARIANT_SCORES,
+    CLEAR_GENE_NETWORK_SCORES
   } from '../store/mutations'
   import { COMPUTE_SCORE } from '../store/actions'
 
@@ -51,7 +52,8 @@
     name: 'hpo-select',
     data: function () {
       return {
-        phenotypes: []
+        phenotypes: [],
+        selectedOptions: []
       }
     },
     computed: {
@@ -82,9 +84,15 @@
           .filter(x => selectedPhenotypeFilters.indexOf(x) < 0)
           .concat(selectedPhenotypeFilters.filter(x => previousFilters.indexOf(x) < 0))[0]
 
-        if (selectedPhenotypeFilters.length > previousFilters.length) {
+        if (selectedPhenotypeFilters.length === 0) {
+          // Reset
+          this.$store.commit(CLEAR_GENE_NETWORK_SCORES)
+          this.$store.commit(UPDATE_VARIANT_SCORES)
+        } else if (selectedPhenotypeFilters.length > previousFilters.length) {
+          // Add one
           this.$store.dispatch(COMPUTE_SCORE, phenotypeFilter)
         } else {
+          // Remove one
           this.$store.commit(REMOVE_GENE_NETWORK_SCORES, phenotypeFilter)
           this.$store.commit(UPDATE_VARIANT_SCORES)
         }
@@ -92,6 +100,10 @@
       activationChanged (phenotypeId) {
         this.$store.commit(TOGGLE_ACTIVE_PHENOTYPE_FILTERS, phenotypeId)
         this.$store.commit(UPDATE_VARIANT_SCORES)
+      },
+      resetComponent () {
+        this.phenotypes.splice(0)
+        this.selectedOptions.splice(0)
       }
     },
     components: {
@@ -106,6 +118,15 @@
           })
         }
       })
+    },
+    watch: {
+      // call again the method if the route changes
+      $route: function () {
+        this.resetComponent()
+      },
+      selectedOptions: function (val) {
+        this.selectionChanged(val)
+      }
     }
   }
 </script>

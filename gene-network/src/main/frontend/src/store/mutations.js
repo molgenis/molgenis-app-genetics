@@ -10,6 +10,7 @@ export const TOGGLE_ACTIVE_PHENOTYPE_FILTERS = '__TOGGLE_ACTIVE_PHENOTYPE_FILTER
 export const SET_GENE_NETWORK_SCORES = '__SET_GENE_NETWORK_SCORES__'
 export const REMOVE_GENE_NETWORK_SCORES = '__REMOVE_GENE_NETWORK_SCORES__'
 export const UPDATE_VARIANT_SCORES = '__UPDATE_VARIANT_SCORES__'
+export const CLEAR_GENE_NETWORK_SCORES = '__CLEAR_GENE_NETWORK_SCORES__'
 
 export default {
   /**
@@ -137,9 +138,18 @@ export default {
    * Remove geneNetwork scores for a specific phenotypeId. Updates scores in the Variant table
    *
    * @param state state of the application
-   * @param phenotypeId Id of the filter that was removed
+   * @param removedPhenotypeFilter Id of the filter that was removed
    */
   [REMOVE_GENE_NETWORK_SCORES] (state, removedPhenotypeFilter) {
     delete state.geneNetworkScores[removedPhenotypeFilter.id]
+  },
+  /**
+   * Clear out the network scores
+   *
+   * @param state state of the application
+   */
+  [CLEAR_GENE_NETWORK_SCORES] (state) {
+    state.geneNetworkScores = {}
   }
+
 }

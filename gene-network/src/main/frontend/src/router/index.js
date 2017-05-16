@@ -25,7 +25,6 @@ export default new VueRouter({
     },
     {
       path: '/patients',
-      name: 'patients',
       component: PatientsContainer,
       children: [{
         path: ':entityTypeId',

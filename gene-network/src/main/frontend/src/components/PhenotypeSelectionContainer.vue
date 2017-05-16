@@ -20,13 +20,29 @@
           // Sort variants on GeneNetwork score before passing it to variant table
           // TODO Relevant variants and all variants
           const variants = this.$store.state.variants.slice()
-          return variants.sort((a, b) => Number(b.totalScore) - Number(a.totalScore))
+          return variants.sort(this.sortVariants)
         }
       }
     },
     created: function () {
-      const entityTypeId = this.$route.params.entityTypeId
-      this.$store.dispatch(GET_PATIENT, entityTypeId)
+      this.updatePatient()
+    },
+    watch: {
+      // call again the method if the route changes
+      '$route': 'updatePatient'
+    },
+    methods: {
+      updatePatient () {
+        const entityTypeId = this.$route.params.entityTypeId
+        this.$store.dispatch(GET_PATIENT, entityTypeId)
+      },
+      sortVariants (a, b) {
+        // default sort in case of no score
+        if (a.totalScore === undefined || b.totalScore === undefined) {
+          return b.Gene_Name.localeCompare(a.Gene_Name)
+        }
+        return b.totalScore - a.totalScore
+      }
     }
   }
 </script>

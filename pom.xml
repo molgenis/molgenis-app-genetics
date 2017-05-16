@@ -28,7 +28,7 @@
     </scm>
 
     <properties>
-        <molgenis.dependency>4.0.0</molgenis.dependency>
+        <molgenis.dependency>4.1.0-SNAPSHOT</molgenis.dependency>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.12</slf4j.version>
         <logback.version>1.1.3</logback.version>
