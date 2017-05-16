@@ -67,7 +67,7 @@
       queryOntologies (query) {
         // FIXME Searching for HP_0100280 retrieves all items.
         // FIXME Searching for 0100280 does retrieve 1 item but it is not shown in dropdown
-        get(this.$store.state.session.server, '/v2/sys_ont_OntologyTerm?q=ontology.ontologyName==hp;(ontologyTermName=q=' + query + ',ontologyTermSynonym.ontologyTermSynonym=q=' + query + ',ontologyTermIRI=q=' + query + ')')
+        get(this.$store.state.session.server, '/v2/sys_ont_OntologyTerm?q=ontology.ontologyName=like=hp_;(ontologyTermName=q=' + query + ',ontologyTermSynonym.ontologyTermSynonym=q=' + query + ',ontologyTermIRI=q=' + query + ')')
           .then(response => {
             this.phenotypes = response.items.map(function (phenotype) {
               const ontologyTermIRI = phenotype.ontologyTermIRI

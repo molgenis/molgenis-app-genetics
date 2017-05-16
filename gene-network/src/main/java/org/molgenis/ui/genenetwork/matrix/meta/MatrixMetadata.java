@@ -6,9 +6,9 @@ import org.molgenis.file.model.FileMetaMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
 import static org.molgenis.data.meta.model.EntityType.AttributeRole.*;
 import static org.molgenis.data.system.model.RootSystemPackage.PACKAGE_SYSTEM;
@@ -18,16 +18,18 @@ public class MatrixMetadata extends SystemEntityType
 {
 	public static final String FILE_LOCATION = "matrixFileLocation";
 	public static final String ID = "id";
-	public static final String SEPERATOR = "seperator";
-	public static final String COLUMNMAPPINGFILE = "columnMappingFile";
-	public static final String ROWMAPPINGFILE = "rowMappingFile";
+	public static final String SEPARATOR = "separator";
+	public static final String COLUMN_MAPPING_FILE = "columnMappingFile";
+	public static final String ROW_MAPPING_FILE = "rowMappingFile";
 	public static final String SIMPLE_NAME = "Matrix";
 	public static final String PACKAGE = PACKAGE_SYSTEM;
-	public static final String COMMA = "COMMA";
-	public static final String TAB = "TAB";
-	public static final String SEMICOLON = "SEMICOLON";
-	public static final String PIPE = "PIPE";
-	public final List<String> separators = Arrays.asList(COMMA, TAB, SEMICOLON, PIPE);
+	private static final String COMMA = "COMMA";
+	private static final String TAB = "TAB";
+	private static final String SEMICOLON = "SEMICOLON";
+	private static final String PIPE = "PIPE";
+	private final List<String> separators = asList(COMMA, TAB, SEMICOLON, PIPE);
+
+	public static final String MATRIX_METADATA = PACKAGE + "_" + SIMPLE_NAME;
 
 	private final FileMetaMetaData fileMetaMetaData;
 
@@ -47,12 +49,12 @@ public class MatrixMetadata extends SystemEntityType
 		addAttribute(ID, ROLE_ID);
 		addAttribute(FILE_LOCATION, ROLE_LABEL, ROLE_LOOKUP).setLabel("Location of the matrix file").setUnique(true)
 				.setNillable(false);
-		addAttribute(SEPERATOR).setLabel("The seperator used in the matrix file").setNillable(false)
+		addAttribute(SEPARATOR).setLabel("The seperator used in the matrix file").setNillable(false)
 				.setDataType(AttributeType.ENUM).setEnumOptions(separators).setDefaultValue(COMMA);
-		addAttribute(COLUMNMAPPINGFILE).setDescription(
+		addAttribute(COLUMN_MAPPING_FILE).setDescription(
 				"Optional mapping file to map search parameters to columnheaders (format 'matrixValue TAB mappedValue', file should contain a header line)")
 				.setNillable(true).setDataType(AttributeType.FILE).setRefEntity(fileMetaMetaData);
-		addAttribute(ROWMAPPINGFILE).setDescription(
+		addAttribute(ROW_MAPPING_FILE).setDescription(
 				"Optional mapping file to map search parameters to rowheaders (format 'matrixValue TAB mappedValue', file should contain a header line)")
 				.setNillable(true).setDataType(AttributeType.FILE).setRefEntity(fileMetaMetaData);
 	}

@@ -1,14 +1,13 @@
 package org.molgenis.ui.genenetwork.matrix.impl;
 
-import org.molgenis.ui.genenetwork.matrix.MatrixMapper;
-import org.molgenis.ui.genenetwork.matrix.MatrixService;
-import org.molgenis.ui.genenetwork.matrix.meta.MatrixMetadata;
-import org.molgenis.ui.genenetwork.matrix.model.Score;
 import org.molgenis.data.DataService;
 import org.molgenis.data.Entity;
 import org.molgenis.data.MolgenisDataException;
 import org.molgenis.file.FileStore;
 import org.molgenis.file.model.FileMeta;
+import org.molgenis.ui.genenetwork.matrix.meta.MatrixMetadata;
+import org.molgenis.ui.genenetwork.matrix.model.Score;
+import org.molgenis.ui.genenetwork.matrix.service.MatrixService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
+import static java.util.Objects.requireNonNull;
+import static org.molgenis.ui.genenetwork.matrix.factory.DoubleMatrixFactory.createDoubleMatrix;
+import static org.molgenis.ui.genenetwork.matrix.factory.MatrixMapperFactory.createMatrixMapper;
+import static org.molgenis.ui.genenetwork.matrix.meta.MatrixMetadata.*;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Service
@@ -28,67 +32,11 @@ public class MatrixServiceImpl implements MatrixService
 	private DataService dataService;
 	private FileStore fileStore;
 
-	private Map<String, DoubleMatrix> matrixMap = new HashMap<>();
-	private Map<String, MatrixMapper> columnMappingMap = new HashMap<>();
-	private Map<String, MatrixMapper> rowMappingMap = new HashMap<>();
-
 	@Autowired
 	public MatrixServiceImpl(DataService dataService, FileStore fileStore)
 	{
-		this.dataService = Objects.requireNonNull(dataService);
-		this.fileStore = Objects.requireNonNull(fileStore);
-	}
-
-	private DoubleMatrix getMatrixByEntityTypeId(String entityId)
-	{
-		Entity entity = dataService.findOneById(MatrixMetadata.PACKAGE + "_" + MatrixMetadata.SIMPLE_NAME, entityId);
-		if (entity != null)
-		{
-			return getMatrix(entity);
-		}
-		else
-		{
-			throw new MolgenisDataException("Unknown Matrix Metadata EntityID [" + entityId + "]");
-		}
-	}
-
-	private DoubleMatrix getMatrix(Entity entity)
-	{
-		DoubleMatrix matrix;
-		if (matrixMap.get(entity.getIdValue()) == null)
-		{
-			String fileLocation = entity.getString(MatrixMetadata.FILE_LOCATION);
-			char seperator = MatrixMetadata.getSeparatorValue(entity.getString(MatrixMetadata.SEPERATOR));
-			matrix = new DoubleMatrix(new File(fileLocation), seperator);
-			matrixMap.put(entity.getIdValue().toString(), matrix);
-		}
-		else
-		{
-			matrix = matrixMap.get(entity.getIdValue().toString());
-		}
-		getMappers(entity.getIdValue().toString(), entity);
-		return matrix;
-	}
-
-	private void getMappers(String entityId, Entity entity)
-	{
-		if (entity.getEntity(MatrixMetadata.COLUMNMAPPINGFILE) != null && columnMappingMap.get(entityId) == null)
-		{
-			FileMeta meta = entity.getEntity(MatrixMetadata.COLUMNMAPPINGFILE, FileMeta.class);
-			createMapper(entityId, meta, columnMappingMap);
-		}
-		if (entity.getEntity(MatrixMetadata.ROWMAPPINGFILE) != null && rowMappingMap.get(entityId) == null)
-		{
-			FileMeta meta = entity.getEntity(MatrixMetadata.ROWMAPPINGFILE, FileMeta.class);
-			createMapper(entityId, meta, rowMappingMap);
-		}
-	}
-
-	private void createMapper(String entityId, FileMeta meta, Map<String, MatrixMapper> mapperMap)
-	{
-		File file = fileStore.getFile(meta.getId());
-		MatrixMapper mapper = new MatrixMapperImpl(file);
-		mapperMap.put(entityId, mapper);
+		this.dataService = requireNonNull(dataService);
+		this.fileStore = requireNonNull(fileStore);
 	}
 
 	@Override
@@ -101,7 +49,6 @@ public class MatrixServiceImpl implements MatrixService
 		return matrix.getValueByIndex(row, column);
 	}
 
-	@Override
 	@RequestMapping(value = "/{entityId}/valueByNames", method = GET)
 	@ResponseBody
 	public List<Score> getValueByNames(@PathVariable("entityId") String entityName, @RequestParam("rows") String rows,
@@ -112,17 +59,48 @@ public class MatrixServiceImpl implements MatrixService
 
 		for (String row : rows.split(","))
 		{
-			MatrixMapper rowMapper = rowMappingMap.get(entityName);
+			MatrixMapperImpl rowMapper = matrix.getRowMapper();
 			String translatedRow;
 			if (rowMapper != null) translatedRow = rowMapper.map(row);
 			else translatedRow = row;
 			for (String column : columns.split(","))
 			{
-				MatrixMapper columnMapper = columnMappingMap.get(entityName);
+				MatrixMapperImpl columnMapper = matrix.getColumnMapper();
 				if (columnMapper != null) column = columnMapper.map(column);
 				results.add(Score.createScore(column, row, matrix.getValueByName(translatedRow, column)));
 			}
 		}
 		return results;
+	}
+
+	private DoubleMatrix getMatrixByEntityTypeId(String entityId)
+	{
+		Entity entity = dataService.findOneById(MATRIX_METADATA, entityId);
+		if (entity != null)
+		{
+			return getMatrix(entity);
+		}
+		throw new MolgenisDataException("Unknown Matrix Metadata EntityID [" + entityId + "]");
+	}
+
+	private DoubleMatrix getMatrix(Entity entity)
+	{
+		String fileLocation = entity.getString(MatrixMetadata.FILE_LOCATION);
+		char separator = getSeparatorValue(entity.getString(MatrixMetadata.SEPARATOR));
+
+		DoubleMatrix doubleMatrix = createDoubleMatrix(new File(fileLocation), separator);
+
+		if (entity.getEntity(COLUMN_MAPPING_FILE) != null)
+			doubleMatrix.setColumnMapper(getMapper(entity, COLUMN_MAPPING_FILE));
+		if (entity.getEntity(ROW_MAPPING_FILE) != null) doubleMatrix.setRowMapper(getMapper(entity, ROW_MAPPING_FILE));
+
+		return doubleMatrix;
+	}
+
+	private MatrixMapperImpl getMapper(Entity entity, String mapping)
+	{
+		FileMeta meta = entity.getEntity(mapping, FileMeta.class);
+		File file = fileStore.getFile(meta.getId());
+		return createMatrixMapper(file);
 	}
 }
