@@ -19,7 +19,6 @@ import java.util.Arrays;
 
 import static java.io.File.separator;
 import static java.text.MessageFormat.format;
-import static org.molgenis.gavin.job.input.model.LineType.*;
 
 public class GavinDiagJob extends Job<Void>
 {
@@ -80,7 +79,8 @@ public class GavinDiagJob extends Job<Void>
 	private File getFile(String name, String extension)
 	{
 		return fileStore.getFile(
-				format("{0}{1}{2}{3}{4}.{5}", DiagnosticsController.DIAGNOSTICS, separator, jobIdentifier, separator, name, extension));
+				format("{0}{1}{2}{3}{4}.{5}", DiagnosticsController.DIAGNOSTICS, separator, jobIdentifier, separator,
+						name, extension));
 	}
 
 	@Override
@@ -91,10 +91,9 @@ public class GavinDiagJob extends Job<Void>
 		progress.progress(0, "Preprocessing input file...");
 		Multiset<LineType> lineTypes = parser.tryTransform(inputFile, processedInputFile, errorFile);
 		progress.status(format("Parsed input file. Found {0} lines ({1} comments, {2} valid VCF, {3} valid CADD, "
-						+ "{4} errors, {5} indels without CADD score, {6} skipped)", lineTypes.size(), lineTypes.count(
-				LineType.COMMENT),
-				lineTypes.count(LineType.VCF), lineTypes.count(LineType.CADD), lineTypes.count(LineType.ERROR), lineTypes.count(
-						LineType.INDEL_NOCADD),
+						+ "{4} errors, {5} indels without CADD score, {6} skipped)", lineTypes.size(),
+				lineTypes.count(LineType.COMMENT), lineTypes.count(LineType.VCF), lineTypes.count(LineType.CADD),
+				lineTypes.count(LineType.ERROR), lineTypes.count(LineType.INDEL_NOCADD),
 				lineTypes.count(LineType.SKIPPED)));
 		gavinJobExecution.setLineTypes(lineTypes);
 		if (lineTypes.contains(LineType.SKIPPED))
@@ -139,9 +138,8 @@ public class GavinDiagJob extends Job<Void>
 
 		progress.progress(6, format("The variants that were uploaded to the database."));
 		progress.progress(6, format("Result is ready to view in the diagnostics plugin."));
-		String path = menuReaderService.getMenu().findMenuItemPath("");
-
-		progress.setResultUrl(format("{0}/{1}/{2}_{3}", path, "gavin", "diag", gavinJobExecution.getIdentifier()));
+		String path = menuReaderService.getMenu().findMenuItemPath("gene-network");
+		progress.setResultUrl(format("{0}/{1}/{2}", path, "patients", gavinJobExecution.getIdentifier()));
 		return null;
 	}
 

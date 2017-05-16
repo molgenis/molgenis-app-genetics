@@ -8,30 +8,27 @@ import org.molgenis.data.meta.model.EntityType;
 import org.molgenis.gavin.job.input.model.LineType;
 import org.molgenis.gavin.job.meta.GavinJobExecutionMetaData;
 
-import static org.molgenis.gavin.job.input.model.LineType.*;
-import static org.molgenis.gavin.job.meta.GavinJobExecutionMetaData.*;
-
 public class GavinDiagJobExecution extends JobExecution
 {
 	private static final long serialVersionUID = 1L;
-	private static final String GAVIN = "gavin";
+	private static final String GAVIN_DIAG = "gavin-diag";
 
 	public GavinDiagJobExecution(Entity entity)
 	{
 		super(entity);
-		setType(GAVIN);
+		setType(GAVIN_DIAG);
 	}
 
 	public GavinDiagJobExecution(EntityType entityType)
 	{
 		super(entityType);
-		setType(GAVIN);
+		setType(GAVIN_DIAG);
 	}
 
 	public GavinDiagJobExecution(String identifier, EntityType entityType)
 	{
 		super(identifier, entityType);
-		setType(GAVIN);
+		setType(GAVIN_DIAG);
 	}
 
 	public String getFilename()
