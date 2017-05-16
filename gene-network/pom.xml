@@ -124,5 +124,20 @@
             <version>${molgenis.dependency}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.molgenis</groupId>
+            <artifactId>molgenis-data-annotators</artifactId>
+            <version>${molgenis.dependency}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.molgenis</groupId>
+            <artifactId>molgenis-gavin</artifactId>
+            <version>${molgenis.dependency}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.molgenis</groupId>
+            <artifactId>molgenis-data-vcf</artifactId>
+            <version>${molgenis.dependency}</version>
+        </dependency>
     </dependencies>
 </project>
