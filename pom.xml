@@ -23,7 +23,7 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git://github.com/molgenis/molgenis.git</connection>
+        <connection>scm:git:git://github.com/molgenis/molgenis-genetics.git</connection>
         <url>https://github.com/molgenis/molgenis-genetics</url>
     </scm>
 

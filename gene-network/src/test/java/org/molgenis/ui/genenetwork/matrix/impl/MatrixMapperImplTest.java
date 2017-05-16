@@ -5,6 +5,7 @@ import org.molgenis.util.ResourceUtils;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import static org.molgenis.ui.genenetwork.matrix.factory.MatrixMapperFactory.createMatrixMapper;
 import static org.testng.Assert.assertEquals;
 
 public class MatrixMapperImplTest
@@ -14,7 +15,7 @@ public class MatrixMapperImplTest
 	@BeforeTest
 	public void setup()
 	{
-		matrixMapper = new MatrixMapperImpl(ResourceUtils.getFile(getClass(), "/mapping.txt"));
+		matrixMapper = createMatrixMapper(ResourceUtils.getFile(getClass(), "/mapping.txt"));
 	}
 
 	@Test
@@ -24,7 +25,7 @@ public class MatrixMapperImplTest
 		assertEquals(matrixMapper.map("mapping4"), "matrix4");
 	}
 
-	@Test(expectedExceptions = MolgenisDataException.class, expectedExceptionsMessageRegExp = "the specified value \\[foo\\] was not found in the mappingfile")
+	@Test(expectedExceptions = MolgenisDataException.class, expectedExceptionsMessageRegExp = "the specified key \\[foo\\] was not found in the mapping file")
 	public void testMappingInvalid()
 	{
 		matrixMapper.map("foo");
