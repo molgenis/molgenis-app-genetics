@@ -47,7 +47,8 @@
                     <pre class="pre-scrollable">${jobExecution.log?html}</pre>
                 </#if>
 
-                <a class="btn btn-info" type="button" href="${result}">Show results!</a>
+                <a class="btn btn-info" type="button" href="${result}" target="_blank">Show results!</a>
+                <a class="btn btn-info" type="button" href="/menu/main/diagnostics">Upload another file!</a>
             </#if>
             </div>
         </div>
