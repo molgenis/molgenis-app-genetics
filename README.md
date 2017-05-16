@@ -1,5 +1,3 @@
-![Build Status](https://molgenis50.gcc.rug.nl/jenkins/buildStatus/icon?job=molgenis-genetics&stye=plastic)
-
 # molgenis-genetics
 This repository contains modules designed for viewing, filtering, annotating, visualising, and querying genetic data.
 
