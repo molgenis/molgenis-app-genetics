@@ -3,9 +3,10 @@
     <div class="row">
       <div class="col-md-12">
         <b-card show-header class="mb-2">
-          <h2 align="center" slot="header" class="text-muted">Diagnostics platform <span class="badge badge-default">BETA VERSION</span></h2>
-          Diagnostics platform created with MOLGENIS
-          <span v-if="entityTypeId != null">Currently viewing patient <strong>{{entityTypeId}}</strong></span>
+          <h2 align="center" slot="header" class="text-muted">Diagnostics platform <span class="badge badge-default">BETA VERSION</span>
+          </h2>
+          GeneNetwork Variant analysis.
+          <span v-if="patientLabel != null">Currently viewing patient <strong>{{patientLabel}}</strong></span>
         </b-card>
       </div>
     </div>
@@ -14,10 +15,10 @@
       <div class="col">
         <b-nav tabs>
           <b-nav-item to="/home">
-              <a>Home</a>
+            <a>Home</a>
           </b-nav-item>
           <b-nav-item to="/upload">
-              <a>Import data</a>
+            <a>Import data</a>
           </b-nav-item>
           <b-nav-item to="/patients">
             <a>Patients</a>
@@ -38,8 +39,9 @@
     padding-top: 1rem;
     padding-bottom: 2rem;
   }
+
   .card-header {
-    background-color: #b5d592!important;
+    background-color: #b5d592 !important;
   }
 
   .card-block {
@@ -54,9 +56,17 @@
   export default {
     name: 'molgenis-app',
     computed: {
-      entityTypeId: {
+      patientLabel: {
         get: function () {
-          return this.$route.params.entityTypeId
+          const entityTypeId = this.$route.params.entityTypeId
+          if (entityTypeId === undefined || this.$store.state.patients.length === 0) {
+            return null
+          }
+
+          const patient = this.$store.state.patients.find(function (patient) {
+            return patient.id === entityTypeId
+          })
+          return patient.label
         }
       },
       showAlert: {
