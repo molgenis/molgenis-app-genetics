@@ -60,7 +60,7 @@
         // HTML workaround because all available file system packages on npm are broken
         const dlAnchorElem = document.getElementById('download-anchor')
         dlAnchorElem.setAttribute('href', 'data:text/csv;charset=utf-8;base64,' + base64EncodingUTF8(result))
-        dlAnchorElem.setAttribute('download', 'patient_' + this.$route.params.entityTypeId)
+        dlAnchorElem.setAttribute('download', 'patient_' + this.$route.params.entityTypeId + '.csv')
         dlAnchorElem.click()
       }
     },
