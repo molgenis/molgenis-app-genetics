@@ -14,7 +14,8 @@
     "lint:fix": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
-    "bootstrap-vue": "^0.14.0"
+    "bootstrap-vue": "^0.14.0",
+    "to-csv": "^0.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

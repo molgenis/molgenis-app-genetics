@@ -5433,6 +5433,10 @@ to-arraybuffer@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/to-arraybuffer/-/to-arraybuffer-1.0.1.tgz#7d229b1fcc637e466ca081180836a7aabff83f43"
 
+to-csv@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/to-csv/-/to-csv-0.1.1.tgz#6cb559084f8171eb85c71b149053c293b228c1da"
+
 to-fast-properties@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.2.tgz#f3f5c0c3ba7299a7ef99427e44633257ade43320"
