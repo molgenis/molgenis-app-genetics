@@ -2,7 +2,14 @@
   <div class="row">
     <div class="col-md-12">
       <h4>Patients</h4>
-      <p>Select a patient from the menu to view its details</p>
+      <hr>
+      View variants for each patient (VCF) by clicking on a patient link on the left.
+      <br><br>
+      When viewing a patient, you can look for HPO phenotypes. Phenotype selection will sort variants based on GeneNetwork score.
+      <br><br>
+      To import a patient (VCF), you can either go to the <a href="/menu/main/diagnostics">Diagnostic annotator</a>, or import a VCF / EMX with the correct metadata <a href="/upload">here</a>.
+      <br><br>
+      Metadata <strong>has</strong> to have a <em>Gene_Name</em> column containing HGNC symbols to work with the HPO / GeneNetwork filtering.
     </div>
   </div>
 </template>

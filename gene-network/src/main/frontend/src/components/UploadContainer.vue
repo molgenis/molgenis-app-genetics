@@ -10,7 +10,7 @@
       <div class="col">
         <label for="vcf-file-select">Variant file</label>
         <b-form-file id="vcf-file-select" choose-label="Select a VCF file" v-model="file"></b-form-file><br>
-        <small class="text-muted">Select a .vcf or .vcf.gz file from your hard drive</small>
+        <small class="text-muted">Select a .vcf, .vcf.gz, or an EMX file from your hard drive</small>
       </div>
     </div>
 

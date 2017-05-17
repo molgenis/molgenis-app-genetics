@@ -14,14 +14,14 @@
     <div class="row main-nav">
       <div class="col">
         <b-nav tabs>
-          <b-nav-item to="/home">
-            <a>Home</a>
+          <b-nav-item to="/patients">
+            <a>Patients</a>
           </b-nav-item>
           <b-nav-item to="/upload">
             <a>Import data</a>
           </b-nav-item>
-          <b-nav-item to="/patients">
-            <a>Patients</a>
+          <b-nav-item to="/setup">
+            <a>Setup</a>
           </b-nav-item>
         </b-nav>
       </div>
