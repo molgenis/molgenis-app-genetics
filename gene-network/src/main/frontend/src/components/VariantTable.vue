@@ -27,17 +27,15 @@
   import { TextEncoder } from 'text-encoding'
   import { fromByteArray } from 'base64-js'
 
-  // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#Solution_2_–_rewrite_the_DOMs_atob()_and_btoa()_using_JavaScript's_TypedArrays_and_UTF-8
-  function base64EncodingUTF8 (str) {
-    const encoded = new TextEncoder('utf-8').encode(str)
-    return fromByteArray(encoded)
-  }
-
   export default {
     name: 'variant-table',
     props: ['variants'],
     methods: {
-      download: function () {
+      base64EncodingUTF8: function (str) {
+        const encoded = new TextEncoder('utf-8').encode(str)
+        return fromByteArray(encoded)
+      },
+      variantsToCsv: function () {
         const data = []
         this.variants.map(function (variant) {
           data.push({
@@ -48,12 +46,14 @@
             'gavinReason': variant['gavinReason']
           })
         })
-
-        const result = csv(data).replace(/\r\n/g, '\n')
+        return csv(data).replace(/\r\n/g, '\n')
+      },
+      download: function () {
+        const result = this.variantsToCsv()
 
         // HTML workaround because all available file system packages on npm are broken
         const dlAnchorElem = document.getElementById('download-anchor')
-        dlAnchorElem.setAttribute('href', 'data:text/csv;charset=utf-8;base64,' + base64EncodingUTF8(result))
+        dlAnchorElem.setAttribute('href', 'data:text/csv;charset=utf-8;base64,' + this.base64EncodingUTF8(result))
         dlAnchorElem.setAttribute('download', 'patient_' + this.$route.params.entityTypeId + '.csv')
         dlAnchorElem.click()
       }
