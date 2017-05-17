@@ -51,8 +51,7 @@
             'Gene_Name': variant['Gene_Name'],
             'cDNA': variant['cDNA'],
             'pChange': variant['pChange'],
-            'gavinReason': variant['gavinReason'],
-            'ë': 'test that awesome ë'
+            'gavinReason': variant['gavinReason']
           })
         })
 
