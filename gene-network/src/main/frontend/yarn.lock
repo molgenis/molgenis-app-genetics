@@ -829,13 +829,17 @@ base64-arraybuffer@0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.1.5.tgz#73926771923b5a19747ad666aa5cd4bf9c6e9ce8"
 
-base64-js@^1.0.2:
+base64-js@^1.0.2, base64-js@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
 
 base64id@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/base64id/-/base64id-1.0.0.tgz#47688cb99bb6804f0e06d3e763b1c32e57d8e6b6"
+
+base64js@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/base64js/-/base64js-1.0.1.tgz#1093cea0dc68731fff6bd247641048b95e20dff6"
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.1"
@@ -5397,7 +5401,11 @@ tether@^1.4.0, tether@latest:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/tether/-/tether-1.4.0.tgz#0f9fa171f75bf58485d8149e94799d7ae74d1c1a"
 
-text-encoding@0.6.4:
+text-encoder-lite@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/text-encoder-lite/-/text-encoder-lite-1.0.0.tgz#158ac1f5355bd291b143bdc88f1996ce34df3c12"
+
+text-encoding@0.6.4, text-encoding@^0.6.4:
   version "0.6.4"
   resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.6.4.tgz#e399a982257a276dae428bb92845cb71bdc26d19"
 
