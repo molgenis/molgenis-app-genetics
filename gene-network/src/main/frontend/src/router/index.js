@@ -14,16 +14,6 @@ export default new VueRouter({
   base: INITIAL_STATE.baseUrl,
   routes: [
     {
-      path: '/home',
-      name: 'home',
-      component: HomeContainer
-    },
-    {
-      path: '/upload',
-      name: 'upload',
-      component: UploadContainer
-    },
-    {
       path: '/patients',
       component: PatientsContainer,
       children: [{
@@ -37,7 +27,17 @@ export default new VueRouter({
         component: PatientsHelpText
       }]
     },
+    {
+      path: '/upload',
+      name: 'upload',
+      component: UploadContainer
+    },
+    {
+      path: '/setup',
+      name: 'setup',
+      component: HomeContainer
+    },
     // catch all redirect
-    { path: '/', redirect: '/home' }
+    { path: '/', redirect: '/patients' }
   ]
 })

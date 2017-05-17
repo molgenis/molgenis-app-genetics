@@ -55,6 +55,10 @@ export function get (server, uri, token) {
   return callApi(server, uri, 'get', token)
 }
 
+export function del (server, uri, token) {
+  return callApi(server, uri, 'delete', token)
+}
+
 export function login (username, password) {
   return fetch('/api/v1/login', {
     method: 'post',
@@ -70,4 +74,4 @@ export function logout (server, token) {
   })
 }
 
-export default {login, logout, get, callApi}
+export default {login, logout, get, del}
