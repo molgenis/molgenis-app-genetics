@@ -7,11 +7,9 @@
       Variants are sorted based on <em>cumulative</em> gene network score.
     </p>
 
-    <div>
-      <b-form-fieldset horizontal label="Filter" class="table-search-field" :label-size="2">
-        <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
-      </b-form-fieldset>
+    <div class="table-download-button">
       <b-btn class="table-download-button" variant="info" @click="download">Download all variants</b-btn>
+      <br><br>
     </div>
 
 
@@ -20,10 +18,6 @@
   </div>
 </template>
 <style>
-  .table-search-field {
-    float: left
-  }
-
   .table-download-button {
     float: right
   }
