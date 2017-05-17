@@ -9,7 +9,7 @@
         <div class="panel panel-primary" id="instant-import">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    Gavin annotation
+                    Variant interpretation and prioritization
                 </h4>
             </div>
         <#--noinspection FtlReferencesInspection-->
@@ -28,6 +28,11 @@
             <div id="form"></div>
         <#else>
             <div class="panel-body">
+                <ul>
+                    <li>Upload file to annotate with GAVIN</li>
+                    <li>Your results <strong>will</strong> be stored in the database</li>
+                    <li>After annotation you can prioritize your variants using HPO phenotypes and GeneNetwork scores</li>
+                </ul>
                 <div id="instant-import-alert"></div>
                 <#if content?has_content>
                     <div class="row">
@@ -39,6 +44,8 @@
                 </#if>
 
                 <div id="gavin-form"></div>
+
+                <p>Skip annotating and start scoring variants with GeneNetwork <a href="/menu/main/gene-network">here</a></p>
             </div>
         </#if>
         </div>
