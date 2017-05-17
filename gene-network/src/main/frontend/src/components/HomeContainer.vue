@@ -4,7 +4,7 @@
       <h4>Making it work</h4>
       <hr>
       <ol>
-        <li>Import a VCF that is already annotated with gavin</li>
+        <li>Import a VCF or an EMX containing atleast a Gene_Name column with HGNC symbols</li>
         <li>Using the molgenis data explorer edit this VCF entitytype and add it to diagnostics package</li>
         <li>Import HPO ontology using the molgenis upload</li>
         <li>Add an entity to Matrix metadata and add the matrix file with the GeneNetwork scores</li>
