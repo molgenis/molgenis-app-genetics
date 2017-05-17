@@ -1,12 +1,11 @@
-import { get, login, submitForm, del } from '../molgenisApi'
+import { get, login, submitForm } from '../molgenisApi'
 import { CREATE_ALERT, REMOVE_ALERT, SET_VARIANTS, SET_PATIENT_TABLES, SET_TOKEN, UPDATE_JOB, UPDATE_JOB_HREF, SET_GENE_NETWORK_SCORES, UPDATE_VARIANT_SCORES } from './mutations'
 
-export const LOGIN = '__LOGIN__'
+export const GET_PATIENT = '__GET_PATIENT__'
 export const IMPORT_FILE = '__IMPORT_FILE__'
 export const FETCH_JOB = '__FETCH_JOB__'
 export const FETCH_PATIENT_TABLES = '__FETCH_PATIENT_TABLES__'
-export const GET_PATIENT = '__GET_PATIENT__'
-export const DELETE_PATIENT = '__DELETE_PATIENT__'
+export const LOGIN = '__LOGIN__'
 export const COMPUTE_SCORE = '__COMPUTE_SCORE__'
 
 export default {
@@ -100,27 +99,6 @@ export default {
         commit(SET_VARIANTS, response.items)
       }).catch((error) => {
         commit(CREATE_ALERT, {'message': error.errors[0].message, 'type': 'warning'})
-      })
-  },
-  /**
-   * Delete a patient based on patient ID
-   * @param commit
-   * @param state
-   * @param patient
-   */
-  [DELETE_PATIENT] ({commit, dispatch, state}, patientId) {
-    del({apiUrl: '/api'}, '/v1/' + patientId + '/meta')
-      .then(response => {
-        console.log('response', response)
-        // commit(CREATE_ALERT, {message: patientId + ' was successfully deleted', type: 'success'})
-        // dispatch(FETCH_PATIENT_TABLES)
-      }).catch(error => {
-        console.log('error', error)
-        // this.$store.commit(CREATE_ALERT, {
-        //   message: 'Something went wrong when deleting ' + patientId + ': ' + error,
-        //   type: 'danger'
-        // })
-        // dispatch(FETCH_PATIENT_TABLES)
       })
   },
   /**
