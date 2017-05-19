@@ -1,19 +1,10 @@
 <template>
   <div>
-    <br>
-    <h3>Variant Table</h3>
-    <p>
-      Select phenotypes to retrieve gene network scores for every variant.
-      Variants are sorted based on <em>cumulative</em> gene network score.
-    </p>
-
+    <b-table hover :items="variants" :fields="fields" :filter="filter"></b-table>
     <div class="table-download-button">
       <b-btn class="table-download-button" variant="info" @click="download">Download all variants</b-btn>
       <br><br>
     </div>
-
-
-    <b-table hover :items="variants" :fields="fields" :filter="filter"></b-table>
     <a id="download-anchor" style="display:none"></a>
   </div>
 </template>
