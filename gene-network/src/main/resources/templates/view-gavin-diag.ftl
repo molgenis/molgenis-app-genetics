@@ -45,7 +45,7 @@
 
                 <div id="gavin-form"></div>
 
-                <p>Skip annotating and start scoring variants with GeneNetwork <a href="/menu/main/gene-network">here</a></p>
+                <p>Skip annotating and start scoring variants with GeneNetwork <a href="/menu/main/gene-network/patients">here</a></p>
             </div>
         </#if>
         </div>

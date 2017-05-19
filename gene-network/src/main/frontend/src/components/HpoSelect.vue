@@ -1,6 +1,27 @@
 <template>
   <div class="form phenotype-selection-container">
-    <h3 for="selected-phenotype-list">Phenotypes</h3>
+    <p>
+      Select phenotypes to retrieve gene network scores for every variant.
+      Variants are sorted based on <em>cumulative</em> gene network score.
+      <br><br>
+      Variants are only shown when their classification matches <em>Pathogenic</em> or <em>Likely pathogenic</em>.
+      If your data does not contain a classification column, all variants are shown
+    </p>
+    <hr>
+    <div class="row form-group">
+      <div class="col">
+        <v-select
+          id="hpo-select"
+          :on-search="queryOntologies"
+          :options="phenotypes"
+          :value.sync="selectedOptions"
+          multiple
+          placeholder="Search HPO Ontology..."
+          label="label"
+        >
+        </v-select>
+      </div>
+    </div>
     <div class="row form-group">
       <div class="col-md-12">
         <ul id="selected-phenotype-list">
@@ -14,21 +35,6 @@
           </li>
           <li v-show="selectedOptions.length === 0" class="row"><em>No phenotypes selected</em></li>
         </ul>
-      </div>
-    </div>
-
-    <div class="row form-group">
-      <div class="col">
-        <v-select
-          id="hpo-select"
-          :on-search="queryOntologies"
-          :options="phenotypes"
-          :value.sync="selectedOptions"
-          multiple
-          placeholder="Search HPO Ontology..."
-          label="label"
-        >
-        </v-select>
       </div>
     </div>
   </div>

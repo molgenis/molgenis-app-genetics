@@ -16,9 +16,13 @@
     computed: {
       variants: {
         get: function () {
-          // Sort variants on GeneNetwork score before passing it to variant table
-          // TODO Relevant variants and all variants
-          const variants = this.$store.state.variants.slice()
+          const variants = this.$store.state.variants.slice().filter(function (variant) {
+            if (variant.classification === undefined) {
+              return variant
+            }
+            return variant.classification === 'Pathogenic' || variant.classification === 'Likely pathogenic'
+          })
+
           return variants.sort(this.sortVariants)
         }
       }
