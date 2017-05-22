@@ -7,39 +7,27 @@ import org.ujmp.core.Matrix;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
-import static com.google.common.collect.Maps.newHashMap;
 import static org.ujmp.core.Matrix.Factory;
 
 public class DoubleMatrixFactory
 {
-	private static Map<String, DoubleMatrix> matrices = newHashMap();
-
 	public static DoubleMatrix createDoubleMatrix(File file, char separator)
 	{
 		String path = file.getAbsolutePath();
-		if (matrices.containsKey(path))
+		try
 		{
-			return matrices.get(path);
+			Matrix matrix = Factory.linkTo().file(path).asDenseCSV(separator);
+
+			TObjectIntHashMap columnMap = setColumnIndicesMap(matrix);
+			TObjectIntHashMap rowMap = setRowIndicesMap(matrix);
+
+			DoubleMatrix doubleMatrix = new DoubleMatrix(matrix, columnMap, rowMap);
+			return doubleMatrix;
 		}
-		else
+		catch (IOException e)
 		{
-			try
-			{
-				Matrix matrix = Factory.linkTo().file(path).asDenseCSV(separator);
-
-				TObjectIntHashMap columnMap = setColumnIndicesMap(matrix);
-				TObjectIntHashMap rowMap = setRowIndicesMap(matrix);
-
-				DoubleMatrix doubleMatrix = new DoubleMatrix(matrix, columnMap, rowMap);
-				matrices.put(path, doubleMatrix);
-				return doubleMatrix;
-			}
-			catch (IOException e)
-			{
-				throw new MolgenisDataException(e);
-			}
+			throw new MolgenisDataException(e);
 		}
 	}
 

@@ -8,7 +8,6 @@ import org.molgenis.file.model.FileMeta;
 import org.molgenis.ui.genenetwork.matrix.meta.MatrixMetadata;
 import org.molgenis.ui.genenetwork.matrix.model.Score;
 import org.molgenis.ui.genenetwork.matrix.service.MatrixService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import static com.google.common.collect.Maps.newHashMap;
 import static java.util.Objects.requireNonNull;
 import static org.molgenis.ui.genenetwork.matrix.factory.DoubleMatrixFactory.createDoubleMatrix;
 import static org.molgenis.ui.genenetwork.matrix.factory.MatrixMapperFactory.createMatrixMapper;
@@ -32,7 +33,8 @@ public class MatrixServiceImpl implements MatrixService
 	private DataService dataService;
 	private FileStore fileStore;
 
-	@Autowired
+	private static Map<String, DoubleMatrix> matrices = newHashMap();
+
 	public MatrixServiceImpl(DataService dataService, FileStore fileStore)
 	{
 		this.dataService = requireNonNull(dataService);
@@ -85,14 +87,25 @@ public class MatrixServiceImpl implements MatrixService
 
 	private DoubleMatrix getMatrix(Entity entity)
 	{
-		String fileLocation = entity.getString(MatrixMetadata.FILE_LOCATION);
-		char separator = getSeparatorValue(entity.getString(MatrixMetadata.SEPARATOR));
+		DoubleMatrix doubleMatrix;
+		if (matrices.containsKey(entity.getString(MatrixMetadata.ID)))
+		{
+			doubleMatrix = matrices.get(entity.getString(MatrixMetadata.ID));
+		}
+		else
+		{
+			String fileLocation = entity.getString(MatrixMetadata.FILE_LOCATION);
+			char separator = getSeparatorValue(entity.getString(MatrixMetadata.SEPARATOR));
 
-		DoubleMatrix doubleMatrix = createDoubleMatrix(new File(fileLocation), separator);
+			doubleMatrix = createDoubleMatrix(new File(fileLocation), separator);
 
-		if (entity.getEntity(COLUMN_MAPPING_FILE) != null)
-			doubleMatrix.setColumnMapper(getMapper(entity, COLUMN_MAPPING_FILE));
-		if (entity.getEntity(ROW_MAPPING_FILE) != null) doubleMatrix.setRowMapper(getMapper(entity, ROW_MAPPING_FILE));
+			if (entity.getEntity(COLUMN_MAPPING_FILE) != null)
+				doubleMatrix.setColumnMapper(getMapper(entity, COLUMN_MAPPING_FILE));
+			if (entity.getEntity(ROW_MAPPING_FILE) != null)
+				doubleMatrix.setRowMapper(getMapper(entity, ROW_MAPPING_FILE));
+
+			matrices.put(entity.getString(MatrixMetadata.ID), doubleMatrix);
+		}
 
 		return doubleMatrix;
 	}

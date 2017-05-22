@@ -47,7 +47,7 @@ public class MatrixMetadata extends SystemEntityType
 		setLabel("Matrix metadata");
 		setDescription("metadata with information about the matrix file");
 		addAttribute(ID, ROLE_ID);
-		addAttribute(FILE_LOCATION, ROLE_LABEL, ROLE_LOOKUP).setLabel("Location of the matrix file").setUnique(true)
+		addAttribute(FILE_LOCATION, ROLE_LABEL, ROLE_LOOKUP).setLabel("Location of the matrix file")
 				.setNillable(false);
 		addAttribute(SEPARATOR).setLabel("The seperator used in the matrix file").setNillable(false)
 				.setDataType(AttributeType.ENUM).setEnumOptions(separators).setDefaultValue(COMMA);
