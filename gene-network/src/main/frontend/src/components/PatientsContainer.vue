@@ -1,26 +1,30 @@
 <template>
   <div class="row">
-    <div v-bind:style="patientColumnStyle" class="col-md-3">
+    <div class="col-md-3" v-show="!collapsed">
       <b-nav vertical>
-        <b-nav-item><span class="text-muted">Patients</span></b-nav-item>
+        <b-nav-item>
+          <span class="text-muted">Patients</span>
+          <b-button class="btn btn-sm collapse-button" @click="collapsed=true" style="float: right;">hide</b-button>
+        </b-nav-item>
         <b-nav-item v-for="patient in patients">
           <router-link :to="{ name: 'patient-detail', params: { entityTypeId: patient.id }}">{{patient.label}}
           </router-link>
         </b-nav-item>
       </b-nav>
     </div>
+    <div  class="col-lg-1" v-show="collapsed">
+      <b-nav vertical>
+        <b-nav-item>
+          <b-button class="btn btn-sm collapse-button" @click="collapsed=false">show</b-button>
+        </b-nav-item>
+      </b-nav>
+    </div>
     <div class="col">
-      <img class="collapse-button " @click="collapse" width="40" height="40" src="../assets/collapse_icon.png">
+      <h4>Patients</h4>
       <router-view></router-view>
     </div>
   </div>
 </template>
-
-<style>
-  .collapse-button {
-    float: right
-  }
-</style>
 
 <script>
   import PhenotypeSelectionContainer from './PatientsContainer.vue'
@@ -52,16 +56,6 @@
       patients: {
         get: function () {
           return this.$store.state.patients
-        }
-      }
-    },
-    methods: {
-      collapse: function () {
-        this.collapsed = !this.collapsed
-        if (this.collapsed) {
-          this.patientColumnStyle.display = 'none'
-        } else {
-          this.patientColumnStyle.display = 'block'
         }
       }
     },
