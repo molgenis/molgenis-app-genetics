@@ -16,7 +16,7 @@ $(function () {
             },
             validExtensions: ['.vcf', '.vcf.gz', '.tsv', '.tsv.gz', '.txt', '.txt.gz', '.tab', 'tab.gz'],
             showNameFieldExtensions: ['.vcf', '.vcf.gz', '.tsv', '.tsv.gz', '.txt', '.txt.gz', '.tab', 'tab.gz'],
-            maxFileSizeMB: 3
+            maxFileSizeMB: 50
         }), form[0]);
     } else {
         $('#gavin-view').on('click', '.glyphicon-cog', function (e) {
