@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <h4>Patients</h4>
+      <h4>TEST CACHE</h4>
       <hr>
       View variants for each patient (VCF) by clicking on a patient link on the left.
       <br><br>
