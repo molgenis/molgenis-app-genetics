@@ -1,5 +1,15 @@
-import { get, login, submitForm } from '../molgenisApi'
-import { CREATE_ALERT, REMOVE_ALERT, SET_VARIANTS, SET_PATIENT_TABLES, SET_TOKEN, UPDATE_JOB, UPDATE_JOB_HREF, SET_GENE_NETWORK_SCORES, UPDATE_VARIANT_SCORES } from './mutations'
+import {get, login, submitForm} from "../molgenisApi";
+import {
+  CREATE_ALERT,
+  REMOVE_ALERT,
+  SET_GENE_NETWORK_SCORES,
+  SET_PATIENT_TABLES,
+  SET_TOKEN,
+  SET_VARIANTS,
+  UPDATE_JOB,
+  UPDATE_JOB_HREF,
+  UPDATE_VARIANT_SCORES
+} from "./mutations";
 
 export const GET_PATIENT = '__GET_PATIENT__'
 export const IMPORT_FILE = '__IMPORT_FILE__'
@@ -123,7 +133,10 @@ export default {
         commit(REMOVE_ALERT)
       }).catch((error) => {
         if (error.errors === undefined) {
-          commit(CREATE_ALERT, {'message': 'No scores were found for ' + phenotypeFilter.label, 'type': 'danger'})
+          commit(CREATE_ALERT, {
+            'message': 'No score was found for the combination of ' + phenotypeFilter.label + ' and one or more of the genes',
+            'type': 'danger'
+          })
         } else {
           commit(CREATE_ALERT, {'message': error.errors[0].message, 'type': 'warning'})
         }

@@ -2,7 +2,8 @@
   <div>
     <b-table hover :items="variants" :fields="fields" :filter="filter"></b-table>
     <div class="table-download-button">
-      <b-btn class="table-download-button" variant="info" @click="download">Download all variants</b-btn>
+      <b-btn class="table-download-button" variant="info" @click="download" :disabled="variants.length == 0">Download
+      </b-btn>
       <br><br>
     </div>
     <a id="download-anchor" style="display:none"></a>

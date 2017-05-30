@@ -98,7 +98,10 @@ export default {
    * @param variants list of variant objects retrieved from the database
    */
   [SET_VARIANTS] (state, variants) {
-    state.variants = variants
+    var filtered = variants.slice().filter(function (variant) {
+      return variant.classification === 'Pathogenic' || variant.classification === 'Likely pathogenic'
+    })
+    state.variants = filtered
   },
   /**
    * Update variant entity objects in the state with a GeneNetwork score

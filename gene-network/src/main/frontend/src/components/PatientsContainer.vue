@@ -1,35 +1,29 @@
 <template>
   <div class="row">
-    <div class="col-md-3" v-show="!collapsed">
-      <b-nav vertical>
-        <b-nav-item>
-          <span class="text-muted">Patients</span>
-          <b-button class="btn btn-sm collapse-button" @click="collapsed=true" style="float: right;">hide</b-button>
-        </b-nav-item>
-        <b-nav-item v-for="patient in patients">
-          <router-link :to="{ name: 'patient-detail', params: { entityTypeId: patient.id }}">{{patient.label}}
-          </router-link>
-        </b-nav-item>
-      </b-nav>
-    </div>
-    <div  class="col-lg-1" v-show="collapsed">
-      <b-nav vertical>
-        <b-nav-item>
-          <b-button class="btn btn-sm collapse-button" @click="collapsed=false">show</b-button>
-        </b-nav-item>
-      </b-nav>
-    </div>
     <div class="col">
-      <h4>Patients</h4>
-      <router-view></router-view>
+      <div v-bind:style="patientColumnStyle" class="col-md-12">
+        <b-dropdown text="Select a patient" class="m-md-3">
+          <b-dropdown-item v-for="patient in patients" @click="test(patient.id)">
+            {{patient.label}}
+          </b-dropdown-item>
+        </b-dropdown>
+
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
 
+<style>
+  .collapse-button {
+    float: right
+  }
+</style>
+
 <script>
   import PhenotypeSelectionContainer from './PatientsContainer.vue'
   import AlertContainer from './AlertContainer'
-  import { FETCH_PATIENT_TABLES } from '../store/actions'
+  import {FETCH_PATIENT_TABLES} from '../store/actions'
 
   export default {
     name: 'patients-container',
@@ -57,6 +51,19 @@
         get: function () {
           return this.$store.state.patients
         }
+      }
+    },
+    methods: {
+      collapse: function () {
+        this.collapsed = !this.collapsed
+        if (this.collapsed) {
+          this.patientColumnStyle.display = 'none'
+        } else {
+          this.patientColumnStyle.display = 'block'
+        }
+      },
+      test: function (patient) {
+        this.$router.push({name: 'patient-detail', params: {entityTypeId: patient}})
       }
     },
     components: {
