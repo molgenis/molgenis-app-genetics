@@ -1,15 +1,5 @@
-import {get, login, submitForm} from "../molgenisApi";
-import {
-  CREATE_ALERT,
-  REMOVE_ALERT,
-  SET_GENE_NETWORK_SCORES,
-  SET_PATIENT_TABLES,
-  SET_TOKEN,
-  SET_VARIANTS,
-  UPDATE_JOB,
-  UPDATE_JOB_HREF,
-  UPDATE_VARIANT_SCORES
-} from "./mutations";
+import { get, login, submitForm } from '../molgenisApi'
+import { CREATE_ALERT, REMOVE_ALERT, SET_VARIANTS, SET_PATIENT_TABLES, SET_TOKEN, UPDATE_JOB, UPDATE_JOB_HREF, SET_GENE_NETWORK_SCORES, UPDATE_VARIANT_SCORES } from './mutations'
 
 export const GET_PATIENT = '__GET_PATIENT__'
 export const IMPORT_FILE = '__IMPORT_FILE__'
