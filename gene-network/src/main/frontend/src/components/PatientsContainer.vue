@@ -3,7 +3,7 @@
     <div class="col">
       <div v-bind:style="patientColumnStyle" class="col-md-12">
         <b-dropdown text="Select a patient" class="m-md-3">
-          <b-dropdown-item v-for="patient in patients" @click="test(patient.id)">
+          <b-dropdown-item v-for="patient in patients" @click="selectPatient(patient.id)">
             {{patient.label}}
           </b-dropdown-item>
         </b-dropdown>
@@ -13,12 +13,6 @@
     </div>
   </div>
 </template>
-
-<style>
-  .collapse-button {
-    float: right
-  }
-</style>
 
 <script>
   import PhenotypeSelectionContainer from './PatientsContainer.vue'
@@ -54,15 +48,7 @@
       }
     },
     methods: {
-      collapse: function () {
-        this.collapsed = !this.collapsed
-        if (this.collapsed) {
-          this.patientColumnStyle.display = 'none'
-        } else {
-          this.patientColumnStyle.display = 'block'
-        }
-      },
-      test: function (patient) {
+      selectPatient: function (patient) {
         this.$router.push({name: 'patient-detail', params: {entityTypeId: patient}})
       }
     },
