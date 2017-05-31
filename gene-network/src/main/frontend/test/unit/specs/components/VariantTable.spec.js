@@ -48,14 +48,6 @@ describe('VariantTable.vue', () => {
         'pChange': 'Arg>His',
         'gavinReason': 'Pathogenic because test',
         'classification': 'Pathogenic'
-      },
-      {
-        '#CHROM': '2',
-        'Gene_Name': 'BRCA2',
-        'cDNA': 'C>G',
-        'pChange': 'Lys>Ala',
-        'gavinReason': 'Benign because test',
-        'classification': 'Benign'
       }
     ]
     const actualData = getRenderedText(VariantTable, {variants: propsData})

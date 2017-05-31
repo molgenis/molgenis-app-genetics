@@ -170,11 +170,22 @@ describe('mutations', () => {
           '#CHROM': '6',
           ALT: 'C',
           CADD: '-0.272604',
-          CAD_SCALED: '0.765',
-          EFFECT: 'C|LOC101928519|intron_variant|MODIFIER|LOC101928519|transcript|NR_110860.1|pseudogene|5/10|n.721+1698A>G|||||||Benign|genomewide|Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
+          CADD_SCALED: '0.765',
           Gene_Name: 'BRCA1',
           ID: '',
+          classification: 'Pathogenic',
           INTERNAL_ID: 'Hbc9y7QnOOfHElunTxal8A',
+          POS: 19144144,
+          REF: 'T'
+        }, {
+          '#CHROM': '6',
+          ALT: 'C',
+          CADD: '-0.272604',
+          CADD_SCALED: '0.765',
+          Gene_Name: 'BRCA1',
+          ID: '',
+          classification: 'Benign',
+          INTERNAL_ID: 'BLAAT',
           POS: 19144144,
           REF: 'T'
         }
@@ -185,10 +196,10 @@ describe('mutations', () => {
           '#CHROM': '6',
           ALT: 'C',
           CADD: '-0.272604',
-          CAD_SCALED: '0.765',
-          EFFECT: 'C|LOC101928519|intron_variant|MODIFIER|LOC101928519|transcript|NR_110860.1|pseudogene|5/10|n.721+1698A>G|||||||Benign|genomewide|Variant is of "modifier" impact, and therefore unlikely to be pathogenic.',
+          CADD_SCALED: '0.765',
           Gene_Name: 'BRCA1',
           ID: '',
+          classification: 'Pathogenic',
           INTERNAL_ID: 'Hbc9y7QnOOfHElunTxal8A',
           POS: 19144144,
           REF: 'T'
