@@ -16,12 +16,7 @@
     computed: {
       variants: {
         get: function () {
-          const variants = this.$store.state.variants.slice().filter(function (variant) {
-            if (variant.classification === undefined) {
-              return variant
-            }
-            return variant.classification === 'Pathogenic' || variant.classification === 'Likely pathogenic'
-          })
+          const variants = this.$store.state.variants.slice()
 
           return variants.sort(this.sortVariants)
         }

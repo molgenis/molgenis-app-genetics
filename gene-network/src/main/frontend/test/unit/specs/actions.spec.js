@@ -236,7 +236,7 @@ describe('actions', () => {
       td.replace(api, 'get', get)
 
       const payload = {
-        message: 'No scores were found for Test disease',
+        message: 'No score was found for the combination of Test disease and one or more of the genes',
         type: 'danger'
       }
 
