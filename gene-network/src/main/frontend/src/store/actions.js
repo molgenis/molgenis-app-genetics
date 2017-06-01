@@ -123,7 +123,10 @@ export default {
         commit(REMOVE_ALERT)
       }).catch((error) => {
         if (error.errors === undefined) {
-          commit(CREATE_ALERT, {'message': 'No scores were found for ' + phenotypeFilter.label, 'type': 'danger'})
+          commit(CREATE_ALERT, {
+            'message': 'No score was found for the combination of ' + phenotypeFilter.label + ' and one or more of the genes',
+            'type': 'danger'
+          })
         } else {
           commit(CREATE_ALERT, {'message': error.errors[0].message, 'type': 'warning'})
         }

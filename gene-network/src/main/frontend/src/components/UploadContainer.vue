@@ -5,7 +5,11 @@
         <h4>Import data</h4>
       </div>
     </div>
-
+    <div>Metadata <strong>has</strong> to have a <em>Gene_Name</em>
+      column containing HGNC symbols to work with the HPO / GeneNetwork filtering. Metadata needs a <strong>classification</strong>
+      column to be filtered based on Pathogenic or Likely pathogenic.<br>
+      To be used in the tool entities should be located in the "diagnostics" package. For EMX files this can be specified in the metadata, for VCF this should be updated via metadata editing<br><br>
+    </div>
     <div class="row form-group">
       <div class="col">
         <label for="vcf-file-select">Variant file</label>
@@ -17,14 +21,18 @@
     <div class="row form-group">
       <div class="col-md-6">
         <label for="vcf-file-select">Variant file identifier</label>
-        <b-form-input :formatter="format" v-model="entityTypeId"></b-form-input>
+        <b-form-input :formatter="format" v-model="entityTypeId"
+                      :disabled="file === null || !(file.name.endsWith('vcf')||file.name.endsWith('vcf.gz'))"></b-form-input>
         <small class="text-muted">Should not start with a number</small>
       </div>
     </div>
 
     <div class="row">
       <div class="col">
-          <b-button class="btn btn-success" :disabled="!entityTypeId || file === null" @click="upload">Upload</b-button>
+        <b-button class="btn btn-success"
+                  :disabled="file === null || (!entityTypeId && (file.name.endsWith('vcf')||file.name.endsWith('vcf.gz')))"
+                  @click="upload">Upload
+        </b-button>
       </div>
     </div>
 
