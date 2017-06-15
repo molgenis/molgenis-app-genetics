@@ -108,7 +108,7 @@ public class MatrixServiceImpl implements MatrixService
 			}
 			catch (InterruptedException e)
 			{
-				e.printStackTrace();
+				LOG.error("Exception occurred while waiting for matrix to be initialized");
 			}
 		}
 		if (matrices.containsKey(matrixId))
