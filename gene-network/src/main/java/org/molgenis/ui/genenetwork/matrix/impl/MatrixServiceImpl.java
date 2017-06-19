@@ -8,6 +8,8 @@ import org.molgenis.file.model.FileMeta;
 import org.molgenis.ui.genenetwork.matrix.meta.MatrixMetadata;
 import org.molgenis.ui.genenetwork.matrix.model.Score;
 import org.molgenis.ui.genenetwork.matrix.service.MatrixService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +32,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RequestMapping("/api/matrix")
 public class MatrixServiceImpl implements MatrixService
 {
+	private static final Logger LOG = LoggerFactory.getLogger(MatrixServiceImpl.class);
+
 	private DataService dataService;
 	private FileStore fileStore;
 
 	private static Map<String, DoubleMatrix> matrices = newHashMap();
+	private static List<String> initingMatrices = new ArrayList<>();
 
 	public MatrixServiceImpl(DataService dataService, FileStore fileStore)
 	{
@@ -87,13 +92,32 @@ public class MatrixServiceImpl implements MatrixService
 
 	private DoubleMatrix getMatrix(Entity entity)
 	{
+		String matrixId = entity.getString(MatrixMetadata.ID);
 		DoubleMatrix doubleMatrix;
-		if (matrices.containsKey(entity.getString(MatrixMetadata.ID)))
+		int i = 0;
+		while (initingMatrices.contains(matrixId))
+		{
+			try
+			{
+				Thread.sleep(500);
+				i++;
+				if ((i % 10) == 0)
+				{
+					LOG.info("Waiting for matrix with id [" + matrixId + "] to finish initializing");
+				}
+			}
+			catch (InterruptedException e)
+			{
+				LOG.error("Exception occurred while waiting for matrix to be initialized");
+			}
+		}
+		if (matrices.containsKey(matrixId))
 		{
 			doubleMatrix = matrices.get(entity.getString(MatrixMetadata.ID));
 		}
 		else
 		{
+			initingMatrices.add(matrixId);
 			String fileLocation = entity.getString(MatrixMetadata.FILE_LOCATION);
 			char separator = getSeparatorValue(entity.getString(MatrixMetadata.SEPARATOR));
 
@@ -103,7 +127,7 @@ public class MatrixServiceImpl implements MatrixService
 				doubleMatrix.setColumnMapper(getMapper(entity, COLUMN_MAPPING_FILE));
 			if (entity.getEntity(ROW_MAPPING_FILE) != null)
 				doubleMatrix.setRowMapper(getMapper(entity, ROW_MAPPING_FILE));
-
+			initingMatrices.remove(matrixId);
 			matrices.put(entity.getString(MatrixMetadata.ID), doubleMatrix);
 		}
 
